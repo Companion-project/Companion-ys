@@ -1,7 +1,8 @@
-package com.companion.app.service;
+package com.example.companion.service;
 
-import com.companion.app.command.MemberCommand;
-import com.companion.app.domain.MemberDTO;
+import com.example.companion.command.MemberCommand;
+import com.example.companion.domain.MemberDTO;
+import com.example.companion.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 public class MemberInsertService {
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    MemberMapper memberMapper;
+
     public void execute(MemberCommand memberCommand){
     MemberDTO dto = new MemberDTO();
     dto.setGender(memberCommand.getMemberGender());
@@ -25,5 +29,6 @@ public class MemberInsertService {
     dto.setMemberPost(memberCommand.getMemberPost());
     //비밀번호 암호화
     dto.setMemberPw(passwordEncoder.encode(memberCommand.getMemberPw()));
+    memberMapper.memberInsert(dto);
     }
 }

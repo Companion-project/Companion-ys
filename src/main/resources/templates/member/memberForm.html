@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 회원등록 페이지<br/>
-
-회원번호: <input type="text" name="memberNum"> <br/>
-회원아이디:<input type="text" name="memberId" id="memberId"> <br/>
+<form action="memberRegist" method="post" th:object="${memberCommand}">
+회원번호: <input type="text" name="memberNum" th:value="${memberCommand.memberNum}" readonly="readonly">자동 부여 <br/>
+회원아이디:<input type="text" name="memberId" id="memberId"  th:object="${memberCommand.memberId}"> <br/>
 회원비밀번호: <input type="password" name="memberPw"><br/>
 회원비밀번호확인: <input type="password" name="memberPwCon"><br/>
-회원이름: <input type="text" name="memberName"><br/>
-회원주소: <input type="text" name="memberAddr" id="sample4_roadAddress"><br/>
-회원상세주소: <input type="text" name="memberAddr2"><br/>
-우편번호: <input type="text" name="memberPost" id="sample4_postcode"><br/>
+회원이름: <input type="text" name="memberName"  th:object="${memberCommand.memberName}"><br/>
+회원주소: <input type="text" name="memberAddr" id="sample4_roadAddress" th:object="${memberCommand.memberAddr}"><br/>
+회원상세주소: <input type="text" name="memberAddr2"  th:object="${memberCommand.memberAddr2}"><br/>
+우편번호: <input type="text" name="memberPost" id="sample4_postcode"  th:object="${memberCommand.memberPost}"><br/>
 성별: <input type="radio" name="memberGender" value="M">남자
 성별: <input type="radio" name="memberGender" value="F">여자<br/>
-연락처1: <input type="tel" name="memberPhone1"><br/>
-연락처2: <input type="tel" name="memberPhone2"><br/>
-이메일: <input type="email" name="memberEmail" id="memberEmail"><br/>
-생년월일: <input type="date" name="memberBirth"><br/>
-
+연락처1: <input type="tel" name="memberPhone1"  th:object="${memberCommand.memberPhone1}"><br/>
+연락처2: <input type="tel" name="memberPhone2"  th:object="${memberCommand.memberPhone2}"><br/>
+이메일: <input type="email" name="memberEmail" id="memberEmail"  th:object="${memberCommand.memberEmail}"><br/>
+    <!-- java 타입인 날짜를 yyyy-MM-dd형식으로 변환하기 위해 #dates사용 -->
+생년월일: <input type="date" name="memberBirth"  th:object="${#dates.format(memberCommand.memberBirth, 'yyyy-MM-dd')}"><br/>
+<input type="submit" value="회원등록">
+</form>
 </body>
 </html>

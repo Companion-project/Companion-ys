@@ -1,4 +1,4 @@
-package com.companion.app.domain;
+package com.example.companion.domain;
 
 import lombok.Data;
 
