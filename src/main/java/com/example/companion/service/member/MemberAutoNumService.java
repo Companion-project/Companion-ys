@@ -1,4 +1,4 @@
-package com.example.companion.service;
+package com.example.companion.service.member;
 
 import com.example.companion.command.MemberCommand;
 import com.example.companion.mapper.MemberMapper;

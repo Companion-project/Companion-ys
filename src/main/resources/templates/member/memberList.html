@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <a href="memberRegist">회원등록</a>
+<table border="1" width="600">
+
+<!-- 회원 조회 -->
+<form action="memberList" method="get">
+    <tr>
+        <td colspan="4">검색:
+            <input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+            <input type="submit" value="검색" />
+        </td>
+    </tr>
+</form>
+    <tr>
+        <td>번호</td>
+        <td>이름</td>
+        <td>아이디</td>
+        <td>등록일</td>
+    </tr>
+    <tr th:each="dto : ${dtos}">
+        <td>[[${dto.memberNum}]]</td>
+        <td>[[${dto.memberName}]]</td>
+        <td>[[${dto.memberId}]]</td>
+        <td>[[${dto.memberRegistDate}]]</td>
+
+
+    </tr>
+
+
+</table>
 </body>
 </html>

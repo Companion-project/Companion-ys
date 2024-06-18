@@ -2,6 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.companion.mapper.MemberMapper">
+
+    <select id="selectAll" resultType="com.example.companion.domain.MemberDTO">
+        select member_num, member_id, member_pw, member_name, member_addr,
+                member_addr_detail, member_post, member_phone1, member_phone2,
+                member_regist, member_birth, gender, member_email,
+                member_email_conf
+        from members
+        <where>
+            <if test="searchWord != null">
+                MEMBER_NAME like '%' || #{searchWord} || '%'
+                or member_id like '%' || #{searchWord} || '%'
+                or member_num like '%' || #{searchWord} || '%'
+            </if>
+        </where>
+    </select>
+
     <select id="memberAutoNum" resultType="string">
         select concat('mem', coalesce(max(substring(member_num from 4)::integer), 100000) + 1)
         from members;
@@ -9,11 +25,10 @@
     <insert id="memberInsert" parameterType="com.example.companion.domain.MemberDTO">
         insert into members(member_num, member_id, member_pw, member_name, member_addr,
                             member_addr_detail, member_post, member_phone1, member_phone2,
-                            member_regist, member_birth, gender, member_email,
-                            member_email_conf, point)
+                            member_regist, member_birth, gender, member_email, member_email_conf)
         values(#{memberNum},#{memberId},#{memberPw},#{memberName},
                #{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1},#{memberPhone2},
-               now(),#{memberBirth}, #{gender},#{memberEmail},null,0)
+               now(),#{memberBirth}, #{gender},#{memberEmail}, null)
     </insert>
 
 </mapper>
