@@ -21,7 +21,9 @@
 회원비밀번호: <input type="password" name="memberPw"><br/>
     <span style="color:red" th:if="${#fields.hasErrors('memberPw')}" th:errors="*{memberPw}"></span><br/>
 
-회원비밀번호확인: <input type="password" name="memberPwCon"><br/>
+회원비밀번호 확인 :  <input type="password" name="memberPwCon" /><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberPwCon')}"
+      th:errors="*{memberPwCon}"></span><br />
 
 회원이름: <input type="text" name="memberName"  th:value="${memberCommand.memberName}"><br/>
 <span style="color:red" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br/>

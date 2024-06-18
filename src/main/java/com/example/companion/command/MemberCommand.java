@@ -18,7 +18,7 @@ public class MemberCommand {
     @NotEmpty(message = "아이디를 입력해주세요.")
     String memberId;
     //비밀번호는 패턴 사용. 영문자+특문+숫자+8글자 이상
-    @Pattern(regexp = "^(?=.*?[A-Za-z])(?=.*[0-9])(?=.*?[#!@$%^&*-+?~]).{8,}$",
+    @Pattern(regexp = "^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#!@$%^&*-+?~]).{8,}$",
             message = "영문자와 숫자 그리고 특수문자 포함 8글자 이상을 입력해주세요.")
     String memberPw;
     @NotBlank(message = "비밀번호 확인을 입력해주세요.")
@@ -45,8 +45,10 @@ public class MemberCommand {
     Date memberRegiDate;
 
     Integer point;
+
     //비밀번호와 비밀번호 확인이 같은지 확인을 위한 메서드
-    public boolean ismemberPwEqualIsMemberPwCon(){
+    public boolean isMemberPwEqualsMemberPwCon(){
+
         return memberPw.equals(memberPwCon);
     }
 }

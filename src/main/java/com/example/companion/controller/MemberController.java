@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("member")
 public class MemberController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class MemberController {
     @Autowired
     MemberListService memberListService;
 
-    @RequestMapping(value = "member/memberList")
+    @RequestMapping(value = "memberList")
     public String list(
             //처음 페이지 열릴 때는 searchWord가 없으므로 페이지 오류 발생
             //오류 방지를 위해 필수가 아니라고 전달
@@ -37,17 +38,20 @@ public class MemberController {
         return "member/memberList";
     }
 
-    @RequestMapping(value = "member/memberRegist", method = RequestMethod.GET)
+    @RequestMapping(value = "memberRegist", method = RequestMethod.GET)
     public String form(Model model){
         //회원번호 불러오기
         memberAutoNumService.execute(model);
         return "member/memberForm";
     }
 
-    @RequestMapping(value = "member/memberRegist", method = RequestMethod.POST)
+    @RequestMapping(value = "memberRegist", method = RequestMethod.POST)
     public String form(@Validated MemberCommand memberCommand, BindingResult result){
         //오류 발생 시 오류 메세지를 html에 전달
-        if(!memberCommand.ismemberPwEqualIsMemberPwCon()){
+        if(result.hasErrors()){
+            return "member/memberForm";
+        }
+        if(!memberCommand.isMemberPwEqualsMemberPwCon()){
             //비밀번호와 비밀번호확인이 다른 경우에도 메세지 보내기
             //result.rejectValue(필드명, 에러코드, 메세지)
             result.rejectValue("memberPwCon", "memberCommand.memberPwCon",
