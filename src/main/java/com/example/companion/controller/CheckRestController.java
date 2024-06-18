@@ -16,7 +16,7 @@ public class CheckRestController {
     @RequestMapping(value="checkRest/userEmailCheck", method = RequestMethod.POST)
     public String userEmailCheck(@RequestParam(value = "userEmail") String userEmail){
         String resultEmail = emailCheckService.execute(userEmail);
-        if (userEmail == null) {
+        if (resultEmail == null) {
             return "사용가능한 이메일입니다.";
         } else{
             return "사용중인 이메일입니다.";
