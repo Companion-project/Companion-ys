@@ -2,13 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.companion.mapper.MemberMapper">
-
-    <select id="selectAll" resultType="com.example.companion.domain.MemberDTO">
-        select member_num, member_id, member_pw, member_name, member_addr,
-                member_addr_detail, member_post, member_phone1, member_phone2,
-                member_regist, member_birth, gender, member_email,
-                member_email_conf
-        from members;
+    <sql id="memberColumnsBase">
+        member_num memberNum,member_id memberId,member_pw memberPw
+        ,member_name memberName,member_addr memberAddr
+        ,member_addr_detail memberAddrDetail,member_post memberPost
+        ,member_phone1 memberPhone1,member_phone2 memberPhone2
+        ,member_regist memberRegistDate ,member_birth memberBirth
+        ,member_email memberEmail ,member_email_conf memberEmailConf
+    </sql>
+    <select id="selectAll" resultType="com.example.companion.domain.MemberDTO" parameterType="com.example.companion.domain.StartEndPageDTO">
+        select * from
+        (select ROW_NUMBER() over (order by member_num) as rn,
+        <include refid="memberColumnsBase"/>
+        from members
         <where>
             <if test="searchWord != null">
                 MEMBER_NAME like '%' || #{searchWord} || '%'
@@ -16,6 +22,8 @@
                 or member_num like '%' || #{searchWord} || '%'
             </if>
         </where>
+        ) sub1
+    where rn between #{startRow} and #{endRow}
     </select>
 
     <select id="memberAutoNum" resultType="string">
@@ -30,5 +38,16 @@
                #{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1},#{memberPhone2},
                now(),#{memberBirth}, #{gender},#{memberEmail}, null)
     </insert>
+
+    <select id="memberCount" parameterType="string" resultType="integer">
+        select count(*) from members
+        <if test='searchWord != null'>
+            <where>
+                MEMBER_NAME like '%' || #{searchWord} || '%'
+                or member_id like '%' || #{searchWord} || '%'
+                or member_num like '%' || #{searchWord} || '%'
+            </where>
+        </if>
+    </select>
 
 </mapper>
