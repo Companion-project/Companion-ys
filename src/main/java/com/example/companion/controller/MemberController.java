@@ -31,9 +31,11 @@ public class MemberController {
             //처음 페이지 열릴 때는 searchWord가 없으므로 페이지 오류 발생
             //오류 방지를 위해 필수가 아니라고 전달
             @RequestParam(value = "searchWord", required = false) String searchWord,
+            //처음 페이지가 열릴 때는 페이지가 없으므로 기본값 1 설정
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             Model model){
         //회원들의 정보를 담아 memberList.html에 보낼 수 있게 Model이 필요
-        memberListService.execute(model, searchWord);
+        memberListService.execute(model, searchWord, page);
 
         return "member/memberList";
     }
