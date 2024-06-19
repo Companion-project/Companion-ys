@@ -3,6 +3,7 @@ package com.example.companion.mapper;
 import com.example.companion.domain.MemberDTO;
 import com.example.companion.domain.StartEndPageDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface MemberMapper {
     String memberAutoNum();
     List<MemberDTO> selectAll(StartEndPageDTO sepDTO);
     int memberCount(String searchWord);
+    int membersDelete(@Param("membersNum") String [] memDels);
+    MemberDTO memberSelectOne(String memberNum);
 }

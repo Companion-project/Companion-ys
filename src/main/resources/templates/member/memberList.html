@@ -31,8 +31,9 @@
         </td>
     </tr>
     <tr th:each="dto : ${dtos}">
-        <td>[[${dto.memberNum}]]</td>
-        <td>[[${dto.memberName}]]</td>
+        <!-- 타임리프에서 href 사용하는 방법: | 또는 @{} -->
+        <td><a th:href="|memberDetail?memberNum=${dto.memberNum}|">[[${dto.memberNum}]]</a></td>
+        <td><a th:href="@{memberDetail(memberNum=${dto.memberNum})}">[[${dto.memberName}]]</a></td>
         <td>[[${dto.memberId}]]</td>
         <td>[[${#dates.format(dto.memberRegistDate,'yyyy-MM-dd')}]]</td>
         <td>

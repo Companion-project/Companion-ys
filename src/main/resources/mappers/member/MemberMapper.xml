@@ -2,7 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.companion.mapper.MemberMapper">
+    <select id="memberSelectOne" parameterType="string" resultType="com.example.companion.domain.MemberDTO">
+        select <include refid="memberColumnBase"/>
+        from members
+        where member_num = #{memberNum}
+    </select>
+    <!-- 여러 회원 동시 삭제하므로 int연산자 사용 -->
+    <!-- MyBatis에서 in연산자 사용은 foreach -->
+    <delete id="membersDelete" parameterType="string">
+        delete from members
+        where member_num in
+        <foreach collection="membersNum" item="memberNum" open="(" close=")" index="index" separator=",">
+            #{memberNum}
+
+        </foreach>
+    </delete>
+
     <!-- 컬럼 정의 -->
+    <!-- member_regist 별칭을 memberRegistDate로 설정 안해서 컬럼명 DTO랑 일치하지 않아서 등록일 에러 발생했었음.
+    해결완료 -->
     <sql id="memberColumnBase">
         member_num, member_id, member_pw, member_name, member_addr,
         member_addr_detail, member_post, member_phone1, member_phone2,
@@ -35,7 +53,7 @@
     <insert id="memberInsert" parameterType="com.example.companion.domain.MemberDTO">
         insert into members(member_num, member_id, member_pw, member_name, member_addr,
                             member_addr_detail, member_post, member_phone1, member_phone2,
-                            member_regist memberRegistDate, member_birth, gender, member_email, member_email_conf, point)
+                            member_regist, member_birth, gender, member_email, member_email_conf, point)
         values(#{memberNum},#{memberId},#{memberPw},#{memberName},
                #{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1},#{memberPhone2},
                now(),#{memberBirth}, #{gender},#{memberEmail}, null, 0)
