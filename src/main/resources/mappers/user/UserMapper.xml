@@ -13,5 +13,11 @@
         ,#{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1}
         ,#{memberPhone2},now(),#{memberBirth},#{gender},#{memberEmail},null,0)
     </insert>
+    <update id="userCheckUpdate" parameterType="string">
+        update members
+        set member_email_conf = 'T' <!-- 이메일 인증을 하면 member_email_conf을 null에서 T로 -->
+        where member_email_conf is null
+        and  member_email = #{email}
+    </update>
 </mapper>
 
