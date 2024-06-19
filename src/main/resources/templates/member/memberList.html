@@ -55,8 +55,8 @@
                 </td>
             </tr>
                 <tr th:each="dto : ${dtos}">
-                <td>[[${dto.memberNum}]]</td>
-                <td>[[${dto.memberName}]]</td>
+                <td><a th:href="|memberDetail?memberNum=${dto.memberNum}|">[[${dto.memberNum}]]</a></td>
+                <td><a th:href="@{memberDetail(memberNum=${dto.memberNum})}">[[${dto.memberName}]]</a></td>
                 <td>[[${dto.memberId}]]</td>
                 <td>[[${#dates.format(dto.memberRegistDate,'yyyy-MM-dd')}]]</td>
                 <td><input type="checkbox" name="memDels" th:value="${dto.memberNum}"/></td>

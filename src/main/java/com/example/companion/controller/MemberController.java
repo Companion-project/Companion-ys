@@ -4,14 +4,13 @@ import com.example.companion.command.MemberCommand;
 import com.example.companion.service.member.MemberAutoNumService;
 import com.example.companion.service.member.MemberInsertService;
 import com.example.companion.service.member.MemberListService;
+import com.example.companion.service.member.MembersDeleteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("member")
@@ -25,6 +24,21 @@ public class MemberController {
 
     @Autowired
     MemberListService memberListService;
+
+    @Autowired
+    MembersDeleteService membersDeleteService;
+
+
+    @GetMapping("memberDetail")
+    public String memberDetail(){
+        return "member/memberInfo";
+    }
+
+    @PostMapping("membersDelete")
+    public String dels(@RequestParam(value="memDels") String memDels[]){
+        membersDeleteService.execute(memDels);
+        return "redirect:memberList";
+    }
 
     @RequestMapping(value = "memberList")
     public String list(
