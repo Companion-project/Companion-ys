@@ -6,7 +6,7 @@
     <sql id="memberColumnBase">
         member_num, member_id, member_pw, member_name, member_addr,
         member_addr_detail, member_post, member_phone1, member_phone2,
-        member_regist, member_birth, member_email, member_email_conf,
+        member_regist memberRegistDate, member_birth, member_email, member_email_conf,
         point, gender
     </sql>
 
@@ -35,7 +35,7 @@
     <insert id="memberInsert" parameterType="com.example.companion.domain.MemberDTO">
         insert into members(member_num, member_id, member_pw, member_name, member_addr,
                             member_addr_detail, member_post, member_phone1, member_phone2,
-                            member_regist, member_birth, gender, member_email, member_email_conf, point)
+                            member_regist memberRegistDate, member_birth, gender, member_email, member_email_conf, point)
         values(#{memberNum},#{memberId},#{memberPw},#{memberName},
                #{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1},#{memberPhone2},
                now(),#{memberBirth}, #{gender},#{memberEmail}, null, 0)
