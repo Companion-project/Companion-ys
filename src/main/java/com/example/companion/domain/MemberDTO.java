@@ -20,4 +20,5 @@ public class MemberDTO {
     String memberPhone2;
     String memberEmail;
     Date memberBirth;
+    Integer point;
 }

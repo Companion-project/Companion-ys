@@ -2,6 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.companion.mapper.MemberMapper">
+    <update id="memberUpdate" parameterType="com.example.companion.domain.MemberDTO">
+        update members
+        <trim prefix="set" suffixOverrides=","><!-- 뒤에 남아 있을 ,삭제 -->
+            member_Name = #{memberName},
+            member_ADDR = #{memberAddr},
+            <if test="memberAddrDetail != null">
+                member_Addr_Detail = #{memberAddrDetail},
+            </if>
+            <if test="memberAddrDetail == null">
+                member_Addr_Detail = null,
+            </if>
+            member_Post = #{memberPost},
+            gender = #{gender},
+            member_Phone1 = #{memberPhone1},
+            <choose>
+                <when test="memberPhone2 != null">
+                    member_Phone2 =#{memberPhone2},
+                </when>
+                <when test="memberPhone2 == null">
+                    member_Phone2 =null,
+                </when>
+            </choose>
+            member_Email =#{memberEmail},
+            member_Birth = #{memberBirth},
+            point = #{point},
+        </trim>
+        <where>
+            member_num = #{memberNum}
+        </where>
+    </update>
+
+
+    <select id="memberSelectOne" parameterType="string" resultType="com.example.companion.domain.MemberDTO">
+        select <include refid="memberColumnsBase"/>
+        from members
+        where member_num = #{memberNum}
+    </select>
+
     <delete id="membersDelete" parameterType="string">
         delete from members
         where member_num in
@@ -18,6 +56,7 @@
         ,member_phone1 memberPhone1,member_phone2 memberPhone2
         ,member_regist memberRegistDate ,member_birth memberBirth
         ,member_email memberEmail ,member_email_conf memberEmailConf
+        ,point ,gender
     </sql>
     <select id="selectAll" resultType="com.example.companion.domain.MemberDTO" parameterType="com.example.companion.domain.StartEndPageDTO">
         select * from
@@ -42,10 +81,10 @@
     <insert id="memberInsert" parameterType="com.example.companion.domain.MemberDTO">
         insert into members(member_num, member_id, member_pw, member_name, member_addr,
                             member_addr_detail, member_post, member_phone1, member_phone2,
-                            member_regist, member_birth, gender, member_email, member_email_conf)
+                            member_regist, member_birth, gender, member_email, member_email_conf, point)
         values(#{memberNum},#{memberId},#{memberPw},#{memberName},
                #{memberAddr},#{memberAddrDetail},#{memberPost},#{memberPhone1},#{memberPhone2},
-               now(),#{memberBirth}, #{gender},#{memberEmail}, null)
+               now(),#{memberBirth}, #{gender},#{memberEmail}, null, 0)
     </insert>
 
     <select id="memberCount" parameterType="string" resultType="integer">

@@ -1,10 +1,7 @@
 package com.example.companion.controller;
 
 import com.example.companion.command.MemberCommand;
-import com.example.companion.service.member.MemberAutoNumService;
-import com.example.companion.service.member.MemberInsertService;
-import com.example.companion.service.member.MemberListService;
-import com.example.companion.service.member.MembersDeleteService;
+import com.example.companion.service.member.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +25,30 @@ public class MemberController {
     @Autowired
     MembersDeleteService membersDeleteService;
 
+    @Autowired
+    MemberDetailService memberDetailService;
+
+    @Autowired
+    MemberUpdateService memberUpdateService;
+
+    @PostMapping("memberModify")
+    public String memberModify(@Validated MemberCommand memberCommand, BindingResult result){
+        if(result.hasErrors()){
+            return "member/memberModify";
+        }
+        memberUpdateService.execute(memberCommand);
+        return "redirect:memberDetail?memberNum="+memberCommand.getMemberNum();
+    }
+
+    @RequestMapping("memberUpdate")
+    public String memberUpdate(@RequestParam(value = "memberNum") String memberNum, Model model){
+        memberDetailService.execute(memberNum, model);
+        return "member/memberModify";
+    }
 
     @GetMapping("memberDetail")
-    public String memberDetail(){
+    public String memberDetail(@RequestParam(value="memberNum") String memberNum, Model model){
+        memberDetailService.execute(memberNum, model);
         return "member/memberInfo";
     }
 
