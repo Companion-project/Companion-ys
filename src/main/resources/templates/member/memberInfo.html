@@ -22,7 +22,7 @@
 <br/>이메일: [[${memberCommand.memberEmail}]]
 <br/>
 <a th:href="|memberUpdate?memberNum=${memberCommand.memberNum}|">회원 수정</a>
-<a th:href="@{memberdelete(memberNum=${memberCommand.memberNum})}">회원강제탈퇴</a>
+<a th:href="|memberdelete/${memberCommand.memberNum}|">회원 강제 탈퇴</a> |
 <a href="memberList">회원목록</a>
 </body>
 </html>

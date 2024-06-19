@@ -36,9 +36,10 @@ public class MemberController {
 
     @GetMapping("memberdelete/{memberNum}")
     public String memberdelete(
-            @PathVariable(value="memberNum") String memberNum){
+            @PathVariable(value="memberNum") String memberNum) {
         memberDeleteService.execute(memberNum);
-        return "redirect:../memberList";
+        return "redirect:../memberList"; // 주소 전달 방식이라 ../를 해줘야 합니다. 그렇지 않으면
+        // 이상 마치겠습니다.
     }
 
     @PostMapping("memberModify")
@@ -63,7 +64,7 @@ public class MemberController {
     }
 
     @PostMapping("membersDelete")
-    public String dels(@RequestParam(value="memDels") String memDels[]){
+    public String dels(@RequestParam(value = "memDels") String memDels[]){
         membersDeleteService.execute(memDels);
         return "redirect:memberList";
     }
@@ -98,7 +99,7 @@ public class MemberController {
             //비밀번호와 비밀번호확인이 다른 경우에도 메세지 보내기
             //result.rejectValue(필드명, 에러코드, 메세지)
             result.rejectValue("memberPwCon", "memberCommand.memberPwCon",
-                                "비밀번호가 일치하지 않습니다.");
+                    "비밀번호가 일치하지 않습니다.");
             return "member/memberForm";
         }else{
             memberInsertService.execute(memberCommand);

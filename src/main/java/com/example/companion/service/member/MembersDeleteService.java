@@ -9,7 +9,7 @@ public class MembersDeleteService {
     @Autowired
     MemberMapper memberMapper;
 
-    public void execute(String memDels[]){
-
+    public void execute(String memDels[]) {
+        memberMapper.membersDelete(memDels);
     }
 }
