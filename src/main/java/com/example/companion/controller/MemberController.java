@@ -39,7 +39,6 @@ public class MemberController {
             @PathVariable(value = "memberNum") String memberNum){
         memberDeleteService.execute(memberNum);
         return "redirect:../memberList";
-
     }
 
     @PostMapping("memberModify")
@@ -77,7 +76,6 @@ public class MemberController {
     public String dels(@RequestParam(value = "memDels") String memDels[]){
         membersDeleteService.execute(memDels);
         return "redirect:memberList";
-
     }
 
     @RequestMapping(value = "memberList")
