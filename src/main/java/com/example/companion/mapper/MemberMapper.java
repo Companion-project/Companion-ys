@@ -16,4 +16,6 @@ public interface MemberMapper {
     int memberCount(String searchWord);
     int membersDelete(@Param("membersNum") String [] memDels);
     MemberDTO memberSelectOne(String memberNum);
+    int memberUpdate(MemberDTO dto);
+    int memberDelete(String memberNum);
 }

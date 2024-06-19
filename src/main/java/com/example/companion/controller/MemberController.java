@@ -28,6 +28,44 @@ public class MemberController {
     @Autowired
     MemberDetailService memberDetailService;
 
+    @Autowired
+    MemberUpdateService memberUpdateService;
+
+    @Autowired
+    MemberDeleteService memberDeleteService;
+
+    @GetMapping("memberdelete/{memberNum}")
+    public String memberDelete(
+            @PathVariable(value = "memberNum") String memberNum){
+        memberDeleteService.execute(memberNum);
+        return "redirect:../memberList";
+
+    }
+
+    @PostMapping("memberModify")
+    //BindingResult는 스프링이 제공하는 객체 중 하나,
+    // -> 객체에서 오류가 발생 시 코드를 담아주는 역할을 하는 클래스
+    public String memberModify(@Validated MemberCommand memberCommand, BindingResult result){
+        //html에서 넘어온 값은MemberCommand가 받음.
+        //이때 MemberCommand에 넘어오지 않은 경우 오류 검사
+        if(result.hasErrors()){
+            //오류가 있다면 다시 memberModify페이지로
+            //memberModify페이지에 MemberCommand가 가진 값을
+            //MemberCommand는 값+오류메세지 전달
+            return "member/memberModify";
+        }
+        memberUpdateService.execute(memberCommand);
+        return "redirect:memberDetail?memberNum="+memberCommand.getMemberNum();
+    }
+
+//    @GetMapping("memberUpdate")
+    @RequestMapping("memberUpdate")
+    public String memberUpdate(
+            @RequestParam(value = "memberNum") String memberNum, Model model){
+        memberDetailService.execute(memberNum, model);
+        return "member/memberModify";
+    }
+
     @GetMapping("memberDetail")
     public String memberDetail(@RequestParam(value = "memberNum") String memberNum,
                                Model model){
