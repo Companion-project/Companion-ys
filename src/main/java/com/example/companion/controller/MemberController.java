@@ -31,6 +31,16 @@ public class MemberController {
     @Autowired
     MemberUpdateService memberUpdateService;
 
+    @Autowired
+    MemberDeleteService memberDeleteService;
+
+    @GetMapping("memberdelete/{memberNum}")
+    public String memberdelete(
+            @PathVariable(value="memberNum") String memberNum){
+        memberDeleteService.execute(memberNum);
+        return "redirect:../memberList";
+    }
+
     @PostMapping("memberModify")
     public String memberModify(@Validated MemberCommand memberCommand, BindingResult result){
         if(result.hasErrors()){
