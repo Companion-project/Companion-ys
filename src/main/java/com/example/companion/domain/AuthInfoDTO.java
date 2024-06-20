@@ -10,4 +10,8 @@ public class AuthInfoDTO {
     String grade;
     String userEmail;
     String userEmailCheck;
+
+    String tableName;
+    String pwColumName;
+    String userIdColumName;
 }
