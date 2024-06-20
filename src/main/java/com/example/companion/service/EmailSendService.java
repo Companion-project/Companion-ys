@@ -16,15 +16,14 @@ public class EmailSendService {
         //메일링 기본문법
         MimeMessage msg = mailSender.createMimeMessage();
         try {
-            msg.setHeader(html, "text/html; charset=UTF-8");
+            msg.setHeader("content-type", "text/html; charset=UTF-8");
             msg.setContent(html, "text/html; charset=UTF-8"); //내용
             msg.setSubject(subject); //제목
             msg.setFrom(new InternetAddress(fromEmail)); //보내는 사람
             msg.setRecipient(MimeMessage.RecipientType.TO,
                     new InternetAddress(toEmail)); //받는사람
             mailSender.send(msg); //이메일전송
-        }catch (
-                MessagingException e){
+        }catch ( MessagingException e){
             e.printStackTrace();
         }
     }

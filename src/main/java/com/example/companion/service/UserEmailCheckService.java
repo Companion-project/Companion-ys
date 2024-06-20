@@ -10,7 +10,7 @@ public class UserEmailCheckService {
     @Autowired
     UserMapper userMapper;
     public int execute(String email){
-        int i=userMapper.userCheckUpdate(email);
+        int i = userMapper.userCheckUpdate(email);
         return i;
     }
 }

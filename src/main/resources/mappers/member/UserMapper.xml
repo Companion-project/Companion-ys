@@ -23,4 +23,18 @@
         and member_email = #{email}
     </update>
 
+    <select id="loginSelect" parameterType="string" resultType="com.example.companion.domain.AuthInfoDTO">
+        <!-- 직원과 회원 중 아이디를 가진 사람을 찾기 위해 union사용
+             UserEmailCheck는 이메일 인증을 했는지 확인.
+             이메일 인증을 한 경우 'T'값을 가짐.
+         -->
+        select member_id userId, member_pw userPw, member_name userName,
+               'mem' grade, member_email userEmail, member_email_conf userEmailCheck
+        from members
+        where member_id = #{userId}
+        union
+        select emp_id, emp_pw, emp_name, 'emp', emp_email, 'T'
+        from employees
+        where emp_id = #{userId}
+    </select>
 </mapper>

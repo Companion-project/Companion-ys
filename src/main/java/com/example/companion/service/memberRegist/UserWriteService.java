@@ -4,11 +4,8 @@ import com.example.companion.command.MemberCommand;
 import com.example.companion.domain.MemberDTO;
 import com.example.companion.mapper.UserMapper;
 import com.example.companion.service.EmailSendService;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -56,16 +53,17 @@ public class UserWriteService {
         model.addAttribute("userName", dto.getMemberName());
         model.addAttribute("userEmail", dto.getMemberEmail());
 
+        //구글 smtp 사용해서 가입 시 이메일 인증처리
         if(i >= 1) {
             //메일링
-            String html = "<html><bod>"
+            String html = "<html><body>"
                     + "이윤서님 회원가입을 축하합니다. <br/>"
                     + "가입을 완료하시려면"
-                    + "<a href='http://localhost/8089/userConfirm?chk=" + dto.getMemberEmail()
+                    + "<a href='http://localhost:8089/userConfirm?chk=" + dto.getMemberEmail()
                     + "'>여기</a>"
                     + "를 눌러주세요";
             String subject = "환영 인사입니다.";
-            String fromEmail = "companion@gmailcom"; //보내는사람
+            String fromEmail = "newe9150@gmail.com"; //보내는사람
             String toEmail = dto.getMemberEmail(); //받는 사람
 
         emailSendService.mailsend(html, subject, fromEmail, toEmail);

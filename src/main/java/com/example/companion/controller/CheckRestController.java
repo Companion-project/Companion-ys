@@ -30,7 +30,7 @@ public class CheckRestController {
     //@RestAPI사용
     @RequestMapping("userConfirm")
     public String userConfirm(@RequestParam(value = "chk") String chk){
-        int i = userEmailCheckService.execute(chk);;
+        int i = userEmailCheckService.execute(chk);
         if(i==0)
             return "이미 인증되었습니다.";
         else
