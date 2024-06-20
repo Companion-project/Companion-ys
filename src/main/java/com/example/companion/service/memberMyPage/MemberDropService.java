@@ -6,23 +6,25 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 @Service
-public class MyPassConfirmService {
+public class MemberDropService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
     MemberMyMapper memberMyMapper;
-    public boolean execute(String newPw, String oldPw, HttpSession session){
+
+    public int execute(String memberPw, HttpSession session, Model model){
         AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
-        if(passwordEncoder.matches(oldPw, auth.getUserPw())){
-            String userPw = passwordEncoder.encode(newPw); //새 비밀번호 암호화
-            //암호화된 비밀번호 DB에 저장
-            memberMyMapper.memberPwUpdate(userPw, auth.getUserId());
-            //새 비밀번호를 session에 저장
-            return true;
-        }else return false;
+        if(passwordEncoder.matches(memberPw, auth.getUserPw())){
+            int i = memberMyMapper.memberDrop(auth.getUserId());
+            return 1;
+        }else{
+            model.addAttribute("errPw", "비밀번호가 일치하지 않습니다.");
+            return 0;
+        }
     }
 }

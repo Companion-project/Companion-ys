@@ -33,7 +33,7 @@
 <span style="color:red" th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br/>
 
 회원상세주소: <input type="text" name="memberAddr2"  th:value="${memberCommand.memberAddr2}"><br/>
-우편번호: <input type="text" name="memberPost" id="sample4_postcode"  th:value="${memberCommand.memberPost}"><br/>
+우편번호: <input type="text" name="memberPost" id="sample4_postcode"  th:value="${memberCommand.memberPost}" readonly="readonly"><br/>
 성별: <input type="radio" name="memberGender" value="M" th:checked="${memberCommand.memberGender == 'M' or memberCommand.memberGender == null}">남자
      <input type="radio" name="memberGender" value="F" th:checked="${memberCommand.memberGender == 'F'}">여자<br/>
 연락처1: <input type="tel" name="memberPhone1"  th:value="${memberCommand.memberPhone1}"><br/>

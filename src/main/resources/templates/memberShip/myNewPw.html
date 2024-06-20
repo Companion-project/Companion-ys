@@ -12,7 +12,7 @@
     <li><a href="memberUpdate">내정보 수정</a> </li>
     <li><a href="userPwModify">비밀번호 변경</a> </li>
     <li><a href="memberDrop">회원탈퇴</a> </li>
-    <li><a href="/">흠</a> </li>
+    <li><a href="/">HOME</a> </li>
 </ul>
 내 비밀번호 변경<br/>
 <form action="myPwUpdate" method="post" name="from" id="frm">
@@ -20,10 +20,14 @@
              <span id="pwErr"></span><br/>
 
 새 비밀번호 : <input type="password" name="newPw" id="newPw"/>
-            <span id="newpwErr"></span><br/>
+            <span id="newPwErr"></span><br/>
+
+새 비밀번호 확인 : <input type="password" name="newPwCon" id="newPwCon"/>
+            <span id="pwConErr"></span><br/>
+        <input type="submit" value="비밀번호 변경"/>
 </form>
 
-<script type="text/javascrpit">
+<script type="text/javascript">
 
 $(function(){
     $("#frm").submit(function(){
@@ -37,20 +41,21 @@ $(function(){
                 alert("서버오류")
             }
         });
+        return false;
     });
 });
 
 
 //status는 서버 실행이 잘 되었는지 확인
 //result는 서버로부터 넘어온 값(여기서는 true, false로 받음)
-function resultOk(result, status, shr, $form){
+function resultOk(result, status, xhr, $form){
     if(status == 'success'){
         if(result == "true"){ //정상적으로 서버가 실행되었으면 내 정보페이지로 이동
             location.href="myDetail";
         }else{ //현재 비밀번호가 틀렸다면 오류메세지, 다시 입력
             $("#oldPw").val("");
             $("#pwErr").text("비밀번호가 틀렸습니다.");
-            $("#PwErr").css("color","red");
+            $("#pwErr").css("color","red");
             $("#newPwErr").text("")
             $("#pwConErr").text("")
             $("#oldPw").focus();
@@ -61,10 +66,20 @@ function resultOk(result, status, shr, $form){
 function passwordChecked(){
     if($("#oldPw").val() == ""){
         $("#pwErr").text("현재 비밀번호를 입력해 주세요.");
-        $("#pwConErr").text("");
-        $("#pwConErr").text("비밀번호 확인이 틀립니다.");
-        $("#newPw").val("");
+        $("#PwErr").css("color","red");
         return false;
+    }
+    if($("#newPw").val() != ""){ //새 비밀번호 입력 유효성검사
+    //새 비밀번호 입력 후 비밀번호확인과 비교
+		if($("#newPw").val() != $("#newPwCon").val()){
+            $("#newPwErr").text("");
+            $("#pwConErr").text("비밀번호 확인이 일치하지 않습니다.");
+            $("#pwErr").css("color","red");
+            $("#newPw").val("");
+            $("#newPwCon").val("");
+            $("#newPw").focus();
+            return false;
+        }
     }else{
         $("#newPwErr").text("새 비밀번호를 입력해주세요.");
         $("#newPwErr").css("color", "red");
