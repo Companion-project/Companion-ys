@@ -8,7 +8,17 @@
 <!-- 로그인 되었을 때 -->
 <div th:if="${session.auth != null}">
     <ul>
-        <li><a href="member/memberList">회원목록</a> </li>
+        <!-- 일반회원과 직원으로 분류 -->
+        <!-- 로그인을 할 대 직원은 emp를 회원은 mem을 grade에 저장하여 구분 -->
+        <th:block th:if="${session.auth.grade == 'emp'}">
+            <li><a href="member/memberList">회원목록</a> </li>
+        </th:block>
+
+        <!-- 이메일로 임시 비밀번호 발급받았으므로 내정보에서 비밀번호 변경 가능하도록 구현 -->
+        <th:block th:if="${session.auth.grade == 'mem'}">
+            <li><a href="/mypage/myDetail">내정보 보기</a> </li>
+        </th:block>
+
         <li><a href="login/logout">로그아웃</a></li>
     </ul>
 </div>
