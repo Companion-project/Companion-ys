@@ -1,6 +1,7 @@
 package com.example.companion.controller;
 
 import com.example.companion.command.MemberCommand;
+import com.example.companion.domain.AuthInfoDTO;
 import com.example.companion.service.memberMyPage.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
