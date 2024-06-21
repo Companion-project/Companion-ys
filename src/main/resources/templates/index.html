@@ -11,6 +11,7 @@
         <!-- 일반회원과 직원으로 분류 -->
         <!-- 로그인을 할 대 직원은 emp를 회원은 mem을 grade에 저장하여 구분 -->
         <th:block th:if="${session.auth.grade == 'emp'}">
+            <li><a href="employee/employeeList">직원목록</a> </li>
             <li><a href="member/memberList">회원목록</a> </li>
         </th:block>
 
