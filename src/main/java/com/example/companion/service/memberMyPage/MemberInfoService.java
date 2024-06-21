@@ -38,6 +38,7 @@ public class MemberInfoService {
         memberCommand.setMemberNum(dto.getMemberNum());
         memberCommand.setMemberPhone1(dto.getMemberPhone1());
         memberCommand.setMemberPhone2(dto.getMemberPhone2());
+        memberCommand.setMemberPost(dto.getMemberPost());
         memberCommand.setMemberRegiDate(dto.getMemberRegistDate());
         memberCommand.setPoint(dto.getPoint());
         model.addAttribute("memberCommand", memberCommand);

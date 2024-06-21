@@ -79,10 +79,10 @@ public class MemberMyPageController {
     @RequestMapping(value = "memberUpdate", method = RequestMethod.POST)
     public String memberUpdate(@Validated MemberCommand memberCommand, BindingResult result,
                                HttpSession session){
-        memberInfoUpdateService.execute(memberCommand, null, result);
+        memberInfoUpdateService.execute(memberCommand, session, result);
         if(result.hasErrors()){
             return "memberShip/myModify";
         }
-        return "redirect:/myDetail";
+        return "redirect:myDetail";
     }
 }

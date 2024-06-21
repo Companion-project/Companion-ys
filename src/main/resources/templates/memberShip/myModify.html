@@ -25,6 +25,8 @@
 회원비밀번호: <input type="password" name="memberPw"><br/>
             <span style="color:red" th:if="${#fields.hasErrors('memberPw')}" th:errors="*{memberPw}"></span><br/>
 
+회원이름 : <input type="text" name="memberName" th:value="${memberCommand.memberName}"/><br />
+<span style="color:red" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}"></span><br />
 
 회원주소: <input type="text" name="memberAddr" id="sample4_roadAddress" onclick="execDaumPostcode();" th:value="${memberCommand.memberAddr}" readonly="readonly"><br/>
 <span style="color:red" th:if="${#fields.hasErrors('memberAddr')}" th:errors="*{memberAddr}"></span><br/>

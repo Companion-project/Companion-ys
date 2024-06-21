@@ -109,7 +109,7 @@ public class MemberController {
             //비밀번호와 비밀번호확인이 다른 경우에도 메세지 보내기
             //result.rejectValue(필드명, 에러코드, 메세지)
             result.rejectValue("memberPwCon", "memberCommand.memberPwCon",
-                                "비밀번호가 일치하지 않습니다.");
+                                "잘못된 비밀번호 입니다.");
             return "member/memberForm";
         }else{
             memberInsertService.execute(memberCommand);

@@ -23,7 +23,7 @@ public class MemberDropService {
             int i = memberMyMapper.memberDrop(auth.getUserId());
             return 1;
         }else{
-            model.addAttribute("errPw", "비밀번호가 일치하지 않습니다.");
+            model.addAttribute("errPw", "잘못된 비밀번호 입니다.");
             return 0;
         }
     }

@@ -54,7 +54,7 @@ function resultOk(result, status, xhr, $form){
             location.href="myDetail";
         }else{ //현재 비밀번호가 틀렸다면 오류메세지, 다시 입력
             $("#oldPw").val("");
-            $("#pwErr").text("비밀번호가 틀렸습니다.");
+            $("#pwErr").text("잘못된 비밀번호 입니다.");
             $("#pwErr").css("color","red");
             $("#newPwErr").text("")
             $("#pwConErr").text("")
@@ -66,7 +66,7 @@ function resultOk(result, status, xhr, $form){
 function passwordChecked(){
     if($("#oldPw").val() == ""){
         $("#pwErr").text("현재 비밀번호를 입력해 주세요.");
-        $("#PwErr").css("color","red");
+        $("#pwErr").css("color","red");
         return false;
     }
     if($("#newPw").val() != ""){ //새 비밀번호 입력 유효성검사
@@ -74,7 +74,7 @@ function passwordChecked(){
 		if($("#newPw").val() != $("#newPwCon").val()){
             $("#newPwErr").text("");
             $("#pwConErr").text("비밀번호 확인이 일치하지 않습니다.");
-            $("#pwErr").css("color","red");
+            $("#pwConErr").css("color","red");
             $("#newPw").val("");
             $("#newPwCon").val("");
             $("#newPw").focus();
