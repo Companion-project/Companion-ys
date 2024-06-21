@@ -9,7 +9,7 @@
     당신의 아이디는 [[${#strings.substring(userId,0,4)}]]
     <!-- 1부터 문자열의 전체 길이에서 4를 뺀 만큼 반복 -->
     <th:block th:each=" i : ${#numbers.sequence(1, #strings.length(userId) - 4 )}">
-        .
+        *
     </th:block>
     입니다.
     </div>
