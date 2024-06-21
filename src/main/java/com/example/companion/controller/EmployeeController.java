@@ -3,6 +3,7 @@ package com.example.companion.controller;
 import com.example.companion.command.EmployeeCommand;
 import com.example.companion.service.employees.EmployeeAutoNumService;
 import com.example.companion.service.employees.EmployeeInsertService;
+import com.example.companion.service.employees.EmployeeListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +22,12 @@ public class EmployeeController {
     @Autowired
     EmployeeInsertService employeeInsertService;
 
+    @Autowired
+    EmployeeListService employeeListService;
+
     @RequestMapping(value = "employeeList", method = RequestMethod.GET)
-    public String empList(){
+    public String empList(Model model){
+        employeeListService.execute(model);
         return "employee/employeeList";
     }
 

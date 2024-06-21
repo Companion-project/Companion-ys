@@ -15,6 +15,13 @@
         <td>등록일</td>
         <td>연락처</td>
     </tr>
+    <tr th:each="dto : ${list}">
+        <td>[[${dto.empNum]]</td>
+        <td>[[${dto.empId]]</td>
+        <td>[[${dto.empName]]</td>
+        <td>[[${#dates.format(dto.empRegiDate,'yyyy-MM-dd')}]]</td>
+        <td>[[${dto.empPhone]]</td>
+    </tr>
 </table>
 </body>
 </html>
