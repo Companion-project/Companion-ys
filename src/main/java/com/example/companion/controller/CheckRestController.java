@@ -1,8 +1,12 @@
 package com.example.companion.controller;
 
+import com.example.companion.command.EmployeeCommand;
 import com.example.companion.service.EmailCheckService;
 import com.example.companion.service.UserEmailCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,5 +37,13 @@ public class CheckRestController {
         if (i == 0)
             return "이미 인증되었습니다. ";
         else return "인증되었습니다.";
+    }
+
+    @RequestMapping(value = "empRegist", method = RequestMethod.POST)
+    public String form(@Validated EmployeeCommand employeeCommand, BindingResult result, Model model){
+        if(result.hasErrors()){
+            return "employee/employeeForm";
+        }
+        return "redirect:employeeList";
     }
 }

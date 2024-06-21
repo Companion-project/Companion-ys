@@ -7,7 +7,13 @@
 <body>
 <div th:if="${session.auth != null}">
 <ul>
-    <li><a href="member/memberList">회원목록</a> </li>
+    <th:block th:if="${session.auth.grade == 'emp'}" >
+        <li><a href="employee/employeeList">직원 목록</a></li>
+        <li><a href="member/memberList">회원목록</a></li>
+    </th:block>
+    <th:block th:if="${session.auth.grade == 'mem'}" >
+    <li><a href="/mypage/myDetail">내 정보 보기</a></li>
+    </th:block>
     <li><a href="login/logout">로그아웃</a></li>
 </ul>
 </div>
