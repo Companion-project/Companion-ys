@@ -2,6 +2,7 @@ package com.example.companion.controller;
 
 import com.example.companion.command.EmployeeCommand;
 import com.example.companion.service.employees.EmployeeAutoNumService;
+import com.example.companion.service.employees.EmployeeDeleteService;
 import com.example.companion.service.employees.EmployeeInsertService;
 import com.example.companion.service.employees.EmployeeListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("employee")
@@ -25,9 +24,17 @@ public class EmployeeController {
     @Autowired
     EmployeeListService employeeListService;
 
+    @Autowired
+    EmployeeDeleteService employeeDeleteService;
+
     @RequestMapping(value = "employeeList", method = RequestMethod.GET)
-    public String empList(Model model){
-        employeeListService.execute(model);
+    //페이징, 검색기능 추가
+    public String empList(
+            @RequestParam(value = "page", required = false, defaultValue = "1")int page,
+            @RequestParam(value = "searchWord", required = false)String searchWord,
+            Model model){
+        //직원 목록 기능
+        employeeListService.execute(searchWord, page, model);
         return "employee/employeeList";
     }
 
@@ -52,5 +59,14 @@ public class EmployeeController {
         employeeInsertService.execute(employeeCommand);
         return "redirect:employeeList";
     }
+
+    @PostMapping("empsDelete")
+    public String empsDelete(
+            @RequestParam(value = "empsDel")String empsDel[]){
+        employeeDeleteService.execute(empsDel);
+        return "redirect:employeeList";
+    }
+
+
 
 }

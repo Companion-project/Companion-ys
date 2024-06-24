@@ -36,8 +36,33 @@
         <result column="EMP_jumin" jdbcType="VARCHAR" property="empSsn"/>
 
     </resultMap>
-    <select id="employeeAllSelect" resultMap="employeeResultMap">
-        select <include refid="employeeBaseColumns"/>
+    <select id="employeeAllSelect" resultMap="employeeResultMap" parameterType="com.example.companion.domain.StartEndPageDTO">
+    select * from(
+        select ROW_NUMBER() over (order by emp_num) as rn,
+            <include refid="employeeBaseColumns"/>
         from employees
+        <where>
+            <if test="searchWord != null">
+                emp_NAME like '%' || #{searchWord} || '%'
+                or emp_id like '%' || #{searchWord} || '%'
+                or emp_num like '%' || #{searchWord} || '%'
+            </if>
+        </where>
+    )   syb1
+    where rn between #{startRow} and #{endRow}
     </select>
+    <select id="employeeCount" parameterType="string" resultType="integer">
+        select count(*) from employees
+        <if test='searchWord != null'>
+            <where>
+                emp_NAME like '%' || #{searchWord} || '%'
+                or emp_id like '%' || #{searchWord} || '%'
+                or emp_num like '%' || #{searchWord} || '%'
+            </where>
+        </if>
+    </select>
+
+    <delete id="employeeDelete" parameterType="string">
+
+    </delete>
 </mapper>
