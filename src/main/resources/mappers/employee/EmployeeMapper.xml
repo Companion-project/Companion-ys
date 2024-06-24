@@ -13,8 +13,8 @@
     </select>
     <insert id="employeeInsert" parameterType="com.example.companion.domain.EmployeeDTO">
         insert into employees( <include refid="employeeBaseColumns"/>)
-        values( #{empNum}, #{empPw}, #{empName}, #{empAddr}
-        ,#{empAddrDetail}, #{empPost},
+        values( #{empNum}, #{empId}, #{empPw}, #{empName}, #{empAddr}
+        ,#{empAddrDetail}, #{empPost}
         ,now(), #{empPhone}, #{empEmail}, #{empSsn}
         )
     </insert>

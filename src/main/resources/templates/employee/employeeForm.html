@@ -29,8 +29,8 @@
             <span style="color:red" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></span><br/>
 
 
-    주소 : <input type="text" name="empAddr" id="sample4_roadAddress" th:value="${employeeCommand.empAddr}"/>
-    <button type="button" onclick="execDaumPostCode()">주소검색</button><br/>
+    주소 : <input type="text" name="empAddr" id="sample4_roadAddress" th:value="${employeeCommand.empAddr}">
+    <button type="button" onclick="execDaumPostcode()">주소검색</button><br />
 
     상세주소 : <input type="text" name="empAddrDetail" th:value="${employeeCommand.empAddrDetail}"/><br/>
 
