@@ -26,7 +26,8 @@ public class GoodsController {
 
     @RequestMapping(value = "goodsList", method = RequestMethod.GET)
     public String goodsList(Model model){
-        goodsListService.execute(model);
+        goodsListService.execute(
+                model);
         return "goods/goodsList";
     }
 

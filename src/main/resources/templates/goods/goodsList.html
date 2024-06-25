@@ -12,7 +12,14 @@
     <li><a href="#">상품 입고 현황</a></li>
 </ul>
 
-<form action="goodsList" method="get">
+<table border="1" width="600" align="center">
+    <form  action="goodsList" method="get" >
+        <!--  -->
+        <tr><td colspan="6">검색 :
+            <input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+            <input type="submit" value="검색" />
+        </td></tr>
+    </form>
     <tr>
         <td>번호</td>
         <td>상품번호</td>
@@ -27,7 +34,7 @@
         <td>[[${dto.goodsPrice}]]</td>
         <td>[[${#dates.format(dto.goodsRegist, 'yyyy-MM-dd')}]]</td>
     </tr>
-</form>
+</table>
 <div id="writeForm"></div>
 <script>
 $(function(){
