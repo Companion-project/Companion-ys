@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.companion.mapper.EmployeeMyMapper">
+
+    <sql id="employeeAliesColumns">
+        EMP_NUM, EMP_ID, EMP_PW, EMP_NAME, EMP_ADDR, EMP_ADDR_detail, EMP_POST,
+        emp_enter_date empRegiDate, EMP_PHONE, EMP_EMAIL, EMP_ssn
+    </sql>
+
+    <select id="employeeInfo" resultType="com.example.companion.domain.EmployeeDTO" parameterType="string">
+        select <include refid="employeeAliesColumns"/>
+        from employees
+        where EMP_ID = #{empId}
+
+    </select>
+
+    <update id="employeeInfoUpdate" parameterType="com.example.companion.domain.EmployeeDTO">
+        update employees
+        set   EMP_NAME = #{empName}
+            , EMP_ADDR =#{empAddr}
+            <if test="empAddrDetail != null">
+                , EMP_ADDR_detail = #{empAddrDetail}
+            </if>
+            , EMP_POST =#{empPost}
+            , EMP_PHONE = #{empPhone}
+            , emp_jumin = #{empJumin}
+        where EMP_id = #{empId}
+    </update>
+
+    <update id="employeePwUpdate" parameterType="string">
+        update employees
+        set emp_pw = #{userPw}
+        where emp_id = #{empId}
+    </update>
+</mapper>

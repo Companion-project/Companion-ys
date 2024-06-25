@@ -21,7 +21,7 @@ public class MemberPwModifyService {
             return "membership/myNewPw"; //일치시 비밀번호 변경 페이지로 이동
         }else {
             //오류메세지
-            model.addAttribute("errPw", "잘못된 비밀번호 입니다.");
+            model.addAttribute("errPw", "잘못된 비밀번호입니다.");
             return "membership/myPwCon"; //불일치면 현재페이지
         }
     }

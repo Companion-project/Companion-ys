@@ -39,7 +39,7 @@ public class UserLoginService {
                       } else {
                           System.out.println("비밀번호가 일치하지 않았을 때");
                           result.rejectValue("userPw", "loginCommand.userPw"
-                                  , "잘못된 비밀번호 입니다.");
+                                  , "잘못된 비밀번호입니다.");
                           }
                       }
             } else {

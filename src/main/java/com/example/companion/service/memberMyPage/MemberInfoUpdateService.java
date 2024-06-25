@@ -22,7 +22,7 @@ public class MemberInfoUpdateService {
     public int execute(MemberCommand memberCommand, HttpSession session, BindingResult result){
         AuthInfoDTO auth = (AuthInfoDTO)session.getAttribute("auth");
         if(!passwordEncoder.matches(memberCommand.getMemberPw(), auth.getUserPw())){
-            result.rejectValue("memberPw", "memberCommand.memberPw", "잘못된 비밀번호 입니다.");
+            result.rejectValue("memberPw", "memberCommand.memberPw", "잘못된 비밀번호입니다.");
             return 0;
         }else{
             MemberDTO dto = new MemberDTO();
