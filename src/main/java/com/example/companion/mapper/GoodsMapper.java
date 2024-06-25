@@ -1,6 +1,7 @@
 package com.example.companion.mapper;
 
 import com.example.companion.domain.GoodsDTO;
+import com.example.companion.domain.StartEndPageDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,5 +17,6 @@ public interface GoodsMapper {
                                           @Param("seq") Integer seq);
 
     public int goodsInsert(GoodsDTO dto);
-    public List<GoodsDTO> allSelect();
+    public List<GoodsDTO> allSelect(StartEndPageDTO sepDTO);
+    public int goodsCount(String searchWord);
 }

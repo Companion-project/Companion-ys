@@ -21,8 +21,28 @@
     </insert>
 
     <select id="allSelect" resultType="com.example.companion.command.GoodsCommand" >
-        select <include refid="goodsColumnBase"/>
-        from goods
+        select * from(
+            select ROW_NUMBER() over (order by goods_num desc) as rn,
+            <include refid="goodsColumnBase"/>
+            from goods
+            <where>
+                <if test="searchWord != null">
+                    goods_name like '%' || #{searchWord} || '%'
+                    or goods_num like '%' || #{searchWord} || '%'
+                </if>
+            </where>
+        )sub1
+        where rn between #{startRow} and #{endRow}
+    </select>
+
+    <select id="goodsCount" parameterType="string" resultType="integer">
+        select count(*) from goods
+        <where>
+            <if test="searchWord != null">
+                goods_name like '%' || #{searchWord} || '%'
+                or goods_num like '%' || #{searchWord} || '%'
+            </if>
+        </where>
     </select>
 
 </mapper>

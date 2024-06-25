@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("goods")
@@ -25,9 +26,10 @@ public class GoodsController {
     GoodsListService goodsListService;
 
     @RequestMapping(value = "goodsList", method = RequestMethod.GET)
-    public String goodsList(Model model){
-        goodsListService.execute(
-                model);
+    public String goodsList(@RequestParam(value = "searchWord", required = false)String searchWord,
+                            @RequestParam(value = "page", required = false, defaultValue = "1")int page,
+                            Model model){
+        goodsListService.execute(searchWord, model, page);
         return "goods/goodsList";
     }
 

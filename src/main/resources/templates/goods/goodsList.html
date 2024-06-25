@@ -7,9 +7,9 @@
 </head>
 <body>
 <ul>
-    <li><a href="#">상품 추가</a></li>
-    <li><a href="#">상품 입고</a></li>
-    <li><a href="#">상품 입고 현황</a></li>
+    <li><a href="goodsForm">상품 추가</a></li>
+    <li><a href="goodsIncoming">상품 입고</a></li>
+    <li><a href="goodsIncomingList">상품 입고 현황</a></li>
 </ul>
 
 <table border="1" width="600" align="center">
@@ -26,6 +26,10 @@
         <td>상품명</td>
         <td>상품가격</td>
         <td>등록일</td>
+        <td>
+            <input type="checkbox" id="checkBoxs"/>
+            <input type="submit" value="삭제" />
+        </td>
     </tr>
     <tr th:each="dto, cnt : ${dtos}">
         <td>[[${cnt.count}]]</td>
@@ -33,22 +37,27 @@
         <td>[[${dto.goodsName}]]</td>
         <td>[[${dto.goodsPrice}]]</td>
         <td>[[${#dates.format(dto.goodsRegist, 'yyyy-MM-dd')}]]</td>
+        <td><input type="checkbox" name="memDels" th:value="${dto.goodsNum}"/></td>
+    </tr>
+    <tr align="center"><td colspan="6">
+        <th:block th:if="${page <= 1}">
+            [이전]
+        </th:block>
+        <th:block th:if="${page > 1}">
+            <a th:href="@{goodsList(page=${page - 1}, searchWord=${searchWord})}">[이전]</a>
+        </th:block>
+        <th:block th:each=" i : ${#numbers.sequence(startPage, endPage)}">
+            <a th:href="@{goodsList(page=${i}, searchWord=${searchWord})}">[[${i}]]</a>
+        </th:block>
+        <th:block th:if="${page >= maxPage}">
+            [다음]
+        </th:block>
+        <th:block th:if="${page < maxPage}">
+            <a th:href="@{goodsList(page=${page + 1}, searchWord=${searchWord})}">[다음]</a>
+        </th:block>
+    </td>
     </tr>
 </table>
-<div id="writeForm"></div>
-<script>
-$(function(){
-    $.ajax({
-        url:"goodsWrite",
-        dataType:"html",
-        success:function(result){
-            $("#writeForm").html(result);
-        },
-        error:function(){
-            alert("서버오류");
-        }
-    });
-});
-</script>
+
 </body>
 </html>
