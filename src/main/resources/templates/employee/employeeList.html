@@ -7,6 +7,15 @@
 <body>
 직원 목록 페이지
 <a href="empRegist">직원 등록</a><br/>
+<form  action="employeeList" method="get" >
+    <!--  -->
+    <tr><td colspan="5">검색 :
+        <input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+        <input type="submit" value="검색" />
+    </td></tr>
+</form>
+
+<form action="empsDelete" method="post" id="frm">
 <table border="1" width="600px">
     <tr>
         <td>직원번호</td>
@@ -14,14 +23,74 @@
         <td>직원이름</td>
         <td>등록일</td>
         <td>연락처</td>
+        <td>
+            <input type="checkbox" id="checkBoxs"/>
+            <input type="submit" value="삭제" />
+        </td>
     </tr>
-    <tr th:each="dto : ${list}">
-        <td>[[${dto.empNum}]]</td>
-        <td>[[${dto.empId}]]</td>
+    <!-- 직원 상세보기 -->
+    <tr th:each="dto : ${dtos}">
+        <td><a th:href="|employeeDetail?empNum=${dto.empNum}|">[[${dto.empNum}]]</a></td>
+        <td><a th:href="@{employeeDetail(empNum=${dto.empNum})}">[[${dto.empId}]]</a></td>
         <td>[[${dto.empName}]]</td>
         <td>[[${#dates.format(dto.empRegiDate,'yyyy-MM-dd')}]]</td>
         <td>[[${dto.empPhone}]]</td>
+        <td>
+            <input type="checkbox" name="empDels" th:value="${dto.empNum}"/>
+        </td>
+    </tr>
+    <tr align="center"><td colspan="6">
+        <th:block th:if="${page <= 1}">
+            [이전]
+        </th:block>
+        <th:block th:if="${page > 1}">
+            <a th:href="@{employeeList(page=${page - 1}, searchWord=${searchWord})}">[이전]</a>
+        </th:block>
+        <th:block th:each=" i : ${#numbers.sequence(startPage, endPage)}">
+            <a th:href="@{employeeList(page=${i}, searchWord=${searchWord})}">[[${i}]]</a>
+        </th:block>
+        <th:block th:if="${page >= maxPage}">
+            [다음]
+        </th:block>
+        <th:block th:if="${page < maxPage}">
+            <a th:href="@{employeeList(page=${page + 1}, searchWord=${searchWord})}">[다음]</a>
+        </th:block>
+    </td>
     </tr>
 </table>
+</form>
+
+<script type="text/javascript">
+    $(function(){
+	// checkBoxs를 선택을 하면 모두 선택이 되게 한다.
+	$("#checkBoxs").click(function(){
+		if($("#checkBoxs").prop("checked")){
+			$("input:checkbox[name=empDels]").prop("checked",true);
+		}else{
+			$("input:checkbox[name=empDels]").prop("checked",false);
+		}
+	});
+	//memDels를 체크를 하나씩 없애면 checkBoxs에 체크가 없어지고 모두 체크를 하면 checkBoxs도 체크가 되게
+	$("input:checkbox[name=empDels]").click(function(){
+		//먼저 체크박스의 개수를 가지고 온다.
+		var tot = $("input:checkbox[name=empDels]").length;
+		// 체크된 체크박스의 개수를 가지고 온다.
+		var checked = $("input:checkbox[name=empDels]:checked").length;
+		//두개를 비교한다.
+		if(tot == checked){
+			// 같으면 checkBoxs에 체크를한다.
+			$("#checkBoxs").prop("checked",true);
+		}else{
+			$("#checkBoxs").prop("checked",false);
+		}
+	});
+	$("#frm").submit(function(){
+		if($("input:checkbox[name=empDels]:checked").length < 1 ){
+			alert("하나이상 선택하세요.");
+			return false;
+		}
+	});
+});
+</script>
 </body>
 </html>

@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 public class EmployeeCommand {
@@ -32,7 +35,9 @@ public class EmployeeCommand {
     String empEmail;
     @NotEmpty(message = "주민번호를 입력해주세요.")
     String empSsn;
-    String empRegiDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    Date empRegiDate;
 
     //empPw와 empPw비교
     public boolean isEmpPwEqualsEmpPwCon(){
