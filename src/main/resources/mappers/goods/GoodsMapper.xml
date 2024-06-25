@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.companion.mapper.GoodsMapper">
+    <select id="incomingAndGoodsAutoNum" resultType="string">
+        select
+        concat(#{sep}, coalesce(max(substr(${columnName},${seq}))::integer, 1000000) +1 )
+        from ${tableName}
+    </select>
+
+    <sql id = "goodsColumnBase">
+        goods_Num, goods_name, goods_price, goods_content, delivery_cost, emp_num,
+        goods_regist, goods_main_store, goods_main_store_img, goods_images,
+        goods_images_img, visit_count, update_Emp_Num, goods_Update_Date
+    </sql>
+
+    <insert id="goodsInsert" parameterType="com.example.companion.command.GoodsCommand">
+        insert into goods(<include refid="goodsColumnBase"/>)
+        values(#{goodsNum}, #{goodsName}, #{goodsPrice}, #{goodsContent}, #{deliveryCost}, #{empNum}, now(),
+                '1','1','1','1',0,null,null)
+    </insert>
+
+    <select id="allSelect" resultType="com.example.companion.command.GoodsCommand" >
+        select <include refid="goodsColumnBase"/>
+        from goods
+    </select>
+
+</mapper>

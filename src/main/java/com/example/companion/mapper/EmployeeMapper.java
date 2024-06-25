@@ -17,4 +17,5 @@ public interface EmployeeMapper {
     public EmployeeDTO employeeOneSelect(String empNum);
     public Integer employeeUpdate(EmployeeDTO dto);
     public Integer employeeDelete(String empNum);
+    public String getEmpNum(String empId);
 }
