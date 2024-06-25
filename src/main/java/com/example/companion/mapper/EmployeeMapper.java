@@ -13,5 +13,9 @@ public interface EmployeeMapper {
     public Integer employeeInsert(EmployeeDTO dto);
     public List<EmployeeDTO> employeeAllSelect(StartEndPageDTO sepDTO);
     public int employeeCount(String searchWord);
-    public Integer employeeDelete(@Param("employeesNum")String empsDel[]);
+    public Integer employeesDelete(@Param("employeesNum")String empsDel[]);
+    public EmployeeDTO employeeOneSelect(String empNum);
+    public Integer employeeUpdate(EmployeeDTO dto);
+    public Integer employeeDelete(String empNum);
+    public String getEmpNum(String empId);
 }

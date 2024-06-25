@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+</head>
+<body>
+<ul>
+    <li><a href="empMyPage">내정보 보기</a></li>
+    <li><a href="employeeUpdate">내정보 수정</a></li>
+    <li><a href="employeePwModify">비밀번호 변경</a></li>
+    <li><a href="/">HOME</a></li>
+</ul>
+<form action="empPwUpdate" method="post" name="frm" id="frm">
+    현재 비밀번호 : <input type="password" name="oldPw" id="oldPw"/><span id="pwErr"></span><br/>
+    변경 비밀번호 : <input type="password" name="newPw" id="newPw"/><br/><span id="newPwErr"></span><br />
+    비밀번호 확인 : <input type="password" name="newPwCon" id="newPwCon"/><span id="pwConErr"></span><br/>
+    <input type="submit" value="비밀번호 변경"/>
+</form>
+
+<script type="text/javascript">
+function resultOk(result, status, xhr, $form){
+    if(status == 'success'){
+        if(result == "true"){
+            location.href="empMyPage";
+        }else{
+            $("#oldPw").val("");
+            $("#pwErr").text("잘못된 비밀번호입니다.");
+            $("#pwErr").css("color","red");
+            $("#newPwErr").text("")
+            $("#pwConErr").text("")
+            $("#oldPw").focus();
+        }
+    }
+}
+
+function passwordChecked(){
+    var oldPw = $("#oldPw").val();
+    var newPw = $("#newPw").val();
+    var newPwCon = $("#newPwCon").val();
+    var pwPattern = /^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+
+    if(oldPw == ""){
+        $("#pwErr").text("현재 비밀번호를 입력해 주세요.");
+        $("#pwErr").css("color","red");
+        return false;
+    }
+
+    if(newPw === oldPw){
+        $("#newPwErr").text("기존 비밀번호와 다른 비밀번호를 입력해주세요.");
+        $("#newPwErr").css("color", "red");
+        return false;
+    }
+
+    if(newPw == ""){
+        $("#newPwErr").text("새 비밀번호를 입력해주세요.");
+        $("#newPwErr").css("color", "red");
+        return false;
+    }
+
+    if(!pwPattern.test(newPw)){
+        $("#newPwErr").text("비밀번호는 영문자, 숫자, 특수문자 포함 8글자 이상을 입력해야 합니다.");
+        $("#newPwErr").css("color","red");
+        return false;
+    }
+
+    if(newPw != newPwCon){
+        $("#pwConErr").text("비밀번호 확인이 일치하지 않습니다.");
+        $("#pwConErr").css("color","red");
+            return false;
+        }
+    return true;
+}
+
+$(function(){
+    $("#frm").submit(function(){
+        $(this).ajaxSubmit({
+            type:'post',
+            url:'empPwUpdate',
+            dataType:'text',
+            beforeSubmit:passwordChecked,
+            success:resultOk,
+            error:function(){
+                alert("서버오류")
+            }
+        });
+        return false;
+    });
+});
+</script>
+</body>
+</html>

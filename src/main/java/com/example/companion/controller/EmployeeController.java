@@ -1,10 +1,7 @@
 package com.example.companion.controller;
 
 import com.example.companion.command.EmployeeCommand;
-import com.example.companion.service.employees.EmployeeAutoNumService;
-import com.example.companion.service.employees.EmployeeDeleteService;
-import com.example.companion.service.employees.EmployeeInsertService;
-import com.example.companion.service.employees.EmployeeListService;
+import com.example.companion.service.employees.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,16 +22,16 @@ public class EmployeeController {
     EmployeeListService employeeListService;
 
     @Autowired
-    EmployeeDeleteService employeeDeleteService;
+    EmployeesDeleteService employeesDeleteService;
+
+    @Autowired
+    EmployeeDetailService employeeDetailService;
 
     @RequestMapping(value = "employeeList", method = RequestMethod.GET)
-    //페이징, 검색기능 추가
-    public String empList(
-            @RequestParam(value = "page", required = false, defaultValue = "1")int page,
-            @RequestParam(value = "searchWord", required = false)String searchWord,
-            Model model){
-        //직원 목록 기능
-        employeeListService.execute(searchWord, page, model);
+    public String empList(@RequestParam(value="page", required = false, defaultValue = "1" ) int page,
+                          @RequestParam(value="searchWord" , required = false) String searchWord,
+                          Model model) {
+        employeeListService.execute(searchWord, page,model);
         return "employee/employeeList";
     }
 
@@ -61,12 +58,45 @@ public class EmployeeController {
     }
 
     @PostMapping("empsDelete")
-    public String empsDelete(
-            @RequestParam(value = "empsDel")String empsDel[]){
-        employeeDeleteService.execute(empsDel);
+    public String membersDelete(
+            @RequestParam(value = "empDels") String empsDel []){
+        employeesDeleteService.execute(empsDel);
         return "redirect:employeeList";
     }
 
+    @RequestMapping(value="employeeDetail", method = RequestMethod.GET)
+    public String employeeDetail(@RequestParam(value = "empNum") String empNum, Model model){
+        employeeDetailService.execute(empNum, model);
+        return "employee/empDetail";
+    }
 
+    @RequestMapping(value = "empModify", method = RequestMethod.GET)
+    public String employeeUpdate(@RequestParam(value = "empNum")String empNum, Model model){
+        employeeDetailService.execute(empNum, model);
+        return "employee/employeeUpdate";
+
+    }
+
+    @Autowired
+    EmployeeUpdateService employeeUpdateService;
+
+    @RequestMapping(value = "empModify", method = RequestMethod.POST)
+    public String employeeUpdate(@Validated EmployeeCommand employeeCommand, BindingResult result){
+
+        if(result.hasErrors()){
+            return "employee/employeeUpdate";
+        }
+        employeeUpdateService.execute(employeeCommand);
+        return "redirect:employeeDetail?empNum=" + employeeCommand.getEmpNum();
+    }
+
+    @Autowired
+    EmployeeDeleteService employeeDeleteService;
+
+    @GetMapping("empDelete")
+    public String employeeDelete(@RequestParam(value = "empNum") String empNum){
+        employeeDeleteService.execute(empNum);
+        return "redirect:employeeList";
+    }
 
 }

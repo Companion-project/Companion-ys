@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<ul>
+    <li><a href="#">상품 추가</a></li>
+    <li><a href="#">상품 입고</a></li>
+    <li><a href="#">상품 입고 현황</a></li>
+</ul>
+
+<table border="1" width="600" align="center">
+    <form  action="goodsList" method="get" >
+        <!--  -->
+        <tr><td colspan="6">검색 :
+            <input type="search" name="searchWord" size="60" th:value="${searchWord}"/>
+            <input type="submit" value="검색" />
+        </td></tr>
+    </form>
+    <tr>
+        <td>번호</td>
+        <td>상품번호</td>
+        <td>상품명</td>
+        <td>상품가격</td>
+        <td>등록일</td>
+    </tr>
+    <tr th:each="dto, cnt : ${dtos}">
+        <td>[[${cnt.count}]]</td>
+        <td>[[${dto.goodsNum}]]</td>
+        <td>[[${dto.goodsName}]]</td>
+        <td>[[${dto.goodsPrice}]]</td>
+        <td>[[${#dates.format(dto.goodsRegist, 'yyyy-MM-dd')}]]</td>
+    </tr>
+</table>
+<div id="writeForm"></div>
+<script>
+$(function(){
+    $.ajax({
+        url:"goodsWrite",
+        dataType:"html",
+        success:function(result){
+            $("#writeForm").html(result);
+        },
+        error:function(){
+            alert("서버오류");
+        }
+    });
+});
+</script>
+</body>
+</html>

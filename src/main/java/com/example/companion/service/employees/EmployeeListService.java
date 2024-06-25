@@ -20,8 +20,8 @@ public class EmployeeListService {
     StartEndPageService startEndPageService;
 
     String searchWord;
-    public void execute(String searchWord, int page, Model model){
-        if(searchWord != null){
+    public void execute(String searchWord, int page, Model model) {
+        if(searchWord != null ) {
             this.searchWord = searchWord.trim();
         }
         StartEndPageDTO sepDTO = startEndPageService.execute(page, this.searchWord);
@@ -29,6 +29,6 @@ public class EmployeeListService {
 
         int count = employeeMapper.employeeCount(this.searchWord);
         startEndPageService.execute(page, count, model, list, this.searchWord);
-        // model.addAttribute("list",list);
+        //model.addAttribute("list", list);
     }
 }
