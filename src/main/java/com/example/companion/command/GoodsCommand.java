@@ -3,6 +3,7 @@ package com.example.companion.command;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -21,5 +22,13 @@ public class GoodsCommand {
     @NotEmpty(message = "설명을 입력해주세요.")
     String goodsContent;
 
+    //파일 받을 객체 추가
+    MultipartFile goodsMainStore;
+    MultipartFile goodsImages[];
+
+    Integer visitCount;
+    String empNum;
     Date goodsRegist;
+    String updateEmpNum;
+    Date goodsUpdateDate;
 }

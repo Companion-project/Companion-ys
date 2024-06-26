@@ -17,13 +17,22 @@
     <insert id="goodsInsert" parameterType="com.example.companion.command.GoodsCommand">
         insert into goods(<include refid="goodsColumnBase"/>)
         values(#{goodsNum}, #{goodsName}, #{goodsPrice}, #{goodsContent}, #{deliveryCost}, #{empNum}, now(),
-                '1','1','1','1',0,null,null)
+                #{goodsMainStore}, #{goodsMainStoreImg}
+        <!-- 이미지가 있는 경우에만 저장 -->
+                <if test="goodsImages != null">, #{goodsImages}, #{goodsImagesImg}</if>
+                <if test="goodsImages == null">,null,null</if>
+                ,0,null,null)
     </insert>
 
     <select id="allSelect" resultType="com.example.companion.command.GoodsCommand" >
         select * from(
             select ROW_NUMBER() over (order by goods_num desc) as rn,
-            <include refid="goodsColumnBase"/>
+                goods_Num goodsNum, goods_name goodsName, goods_price goodsPrice
+                ,goods_content goodsContent, delivery_cost deliveryCost, emp_num empNum
+                ,goods_regist goodsRegist, goods_main_store goodsMainStore
+                ,goods_main_store_img goodsMainStoreImg, goods_images goodsImages
+                ,goods_images_img goodsImagesImg, visit_count visitCount
+                ,update_Emp_Num updateEmpNum, goods_Update_Date goodsUpdateDate
             from goods
             <where>
                 <if test="searchWord != null">
@@ -54,6 +63,7 @@
     </delete>
     
     <resultMap id="goodsResultMap" type="com.example.companion.domain.GoodsDTO">
+
         <constructor>
             <idArg column="goods_Num" javaType="string"/>
             <arg column="goods_Name" javaType="string" />
@@ -65,6 +75,10 @@
             <arg column="goods_Regist" javaType="java.util.Date" />
             <arg column="update_Emp_Num" javaType="string" />
             <arg column="goods_Update_Date" javaType="java.util.Date" />
+            <arg column="goods_main_store" javaType="string" />
+            <arg column="goods_main_store_img" javaType="string" />
+            <arg column="goods_images" javaType="string" />
+            <arg column="goods_images_img" javaType="string" />
 
         </constructor>
 

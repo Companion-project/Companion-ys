@@ -48,6 +48,11 @@ public class GoodsController {
         if(result.hasErrors()){
             return "goods/goodsForm";
         }
+        //메인이미지는 필수 -> 파일선택 안하면 경고메세지 출력
+        if(goodsCommand.getGoodsMainStore().getOriginalFilename().isEmpty()){
+            result.rejectValue("goodsMainStore", "goodsCommand.goodsMainStore", "대문이미지을 선택해주세요.");
+            return "goods/goodsForm";
+        }
         goodsWriteService.execute(goodsCommand, session);
         return "goods/goodsRedirect";
     }
