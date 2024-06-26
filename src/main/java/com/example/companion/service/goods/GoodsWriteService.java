@@ -77,7 +77,7 @@ public class GoodsWriteService {
                     e.printStackTrace();
                 }
                 //파일명을 하나의 문자열로 만들어 준다
-                originalTotal += originalFile+ "-";
+                originalTotal += originalFile + "-";
                 storeTotal += storeFileName + "-";
             }
             //dto에 저장

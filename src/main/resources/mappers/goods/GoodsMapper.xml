@@ -24,7 +24,7 @@
                 ,0,null,null)
     </insert>
 
-    <select id="allSelect" resultType="com.example.companion.command.GoodsCommand" >
+    <select id="allSelect" resultType="com.example.companion.domain.GoodsDTO" >
         select * from(
             select ROW_NUMBER() over (order by goods_num desc) as rn,
                 goods_Num goodsNum, goods_name goodsName, goods_price goodsPrice
