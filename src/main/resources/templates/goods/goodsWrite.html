@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<ul>
+    <li><a href="goodsForm">상품 추가</a></li>
+    <li><a href="goodsIncoming">상품 입고</a></li>
+    <li><a href="goodsIncomingList">상품 입고 현황</a></li>
+</ul>
+<div id="writeForm"></div>
+
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url:"goodsWrite",
+            dataType:"html",
+            success:function(result){
+                $("#writeForm").html(result);
+            },
+            error:function(){
+                alert("서버오류");
+            }
+        });
+    });
+</script>
+</body>
+</html>

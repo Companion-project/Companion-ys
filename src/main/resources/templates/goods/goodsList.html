@@ -20,6 +20,8 @@
             <input type="submit" value="검색" />
         </td></tr>
     </form>
+
+    <form action="productsDelete" method="post" id="frm">
     <tr>
         <td>번호</td>
         <td>상품번호</td>
@@ -28,17 +30,19 @@
         <td>등록일</td>
         <td>
             <input type="checkbox" id="checkBoxs"/>
-            <input type="submit" value="삭제" />
+            <input type="submit" value="선택 삭제" />
         </td>
     </tr>
+
     <tr th:each="dto, cnt : ${dtos}">
         <td>[[${cnt.count}]]</td>
-        <td>[[${dto.goodsNum}]]</td>
-        <td>[[${dto.goodsName}]]</td>
+        <td><a th:href="|goodsDetail?goodsNum=${dto.goodsNum}|">[[${dto.goodsNum}]]</a></td>
+        <td><a th:href="@{goodsDetail(goodsNum=${dto.goodsNum})}">[[${dto.goodsName}]]</a></td>
         <td>[[${dto.goodsPrice}]]</td>
-        <td>[[${#dates.format(dto.goodsRegist, 'yyyy-MM-dd')}]]</td>
+        <td>[[${#dates.format(dto.goodsRegist,'yyyy-MM-dd')}]]</td>
         <td><input type="checkbox" name="memDels" th:value="${dto.goodsNum}"/></td>
     </tr>
+    </form>
     <tr align="center"><td colspan="6">
         <th:block th:if="${page <= 1}">
             [이전]
@@ -59,5 +63,33 @@
     </tr>
 </table>
 
+<script>
+    $(function(){
+        $("#checkBoxs").click(function(){
+            if($("#checkBoxs").prop("checked")){
+                $("input:checkbox[name=memDels]").prop("checked", true);
+            }else{
+                $("input:checkbox[name=memDels]").prop("checked", false);
+            }
+        });
+
+        $("input:checkbox[name=memDels]").click(function(){
+            var tot = $("input:checkbox[name=memDels]").length;
+            var checked = $("input:checked[name=memDels]:checked").length;
+            if(tot == checked){
+                $("#checkBoxs").prop("checked", true);
+            }else{
+                $("#checkBoxs").prop("checked", false);
+            }
+        });
+
+        $("#frm").submit(function(){
+            if($("input:checkbox[name=memDels]:checked").length < 1){
+                alert("하나이상 선택하세요.");
+                return false;
+            }
+        });
+    });
+</script>
 </body>
 </html>

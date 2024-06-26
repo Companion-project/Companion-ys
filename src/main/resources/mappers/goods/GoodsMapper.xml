@@ -45,4 +45,65 @@
         </where>
     </select>
 
+    <delete id="productsDelete" parameterType="string">
+        delete from goods
+        where goods_num in <foreach collection="products" item="goodsNum" open="(" close=")" index="index"
+                            separator=",">
+                                #{goodsNum}
+                            </foreach>
+    </delete>
+    
+    <resultMap id="goodsResultMap" type="com.example.companion.domain.GoodsDTO">
+        <constructor>
+            <idArg column="goods_Num" javaType="string"/>
+            <arg column="goods_Name" javaType="string" />
+            <arg column="goods_Price" javaType="integer" />
+            <arg column="delivery_Cost" javaType="integer" />
+            <arg column="goods_Content" javaType="string" />
+            <arg column="emp_Num" javaType="string" />
+            <arg column="visit_Count" javaType="integer" />
+            <arg column="goods_Regist" javaType="java.util.Date" />
+            <arg column="update_Emp_Num" javaType="string" />
+            <arg column="goods_Update_Date" javaType="java.util.Date" />
+
+        </constructor>
+
+        <!-- id는 primary칼럼, results는 일반칼럼, property는 dto에 있는 해당 테이블 칼럼의 멤버필드 -->
+        <!--
+        <id column="goods_Num" jdbcType="VARCHAR" property="goodsNum"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_price" jdbcType="BIGINT" property="goodsPrice"/>
+        <result column="goods_content" jdbcType="VARCHAR" property="goodsContent"/>
+        <result column="delivery_cost" jdbcType="BIGINT" property="deliveryCost"/>
+        <result column="emp_num" jdbcType="VARCHAR" property="empNum"/>
+        <result column="goods_regist" jdbcType="DATE" property="goodsRegist"/>
+
+        <result column="goods_main_store" jdbcType="VARCHAR" property="goodsMainStore"/>
+        <result column="goods_main_store_img" jdbcType="VARCHAR" property="goodsMainStoreImg"/>
+        <result column="goods_images" jdbcType="VARCHAR" property="goodsImages"/>
+        <result column="goods_images_img" jdbcType="VARCHAR" property="goodsImagesImg"/>
+
+        <result column="visit_count" jdbcType="BIGINT" property="visitCount"/>
+        <result column="update_Emp_Num" jdbcType="VARCHAR" property="updateEmpNum"/>
+        <result column="goods_Update_Date" jdbcType="DATE" property="goodsUpdateDate"/>
+    -->
+    </resultMap>
+    <select id="selectOne" parameterType="string" resultMap="goodsResultMap">
+        select <include refid="goodsColumnBase"/>
+        from goods
+        where goods_Num = #{goodsNum}
+    </select>
+
+    <update id="goodsUpdate" parameterType="com.example.companion.domain.GoodsDTO">
+        update goods
+        set GOODS_NAME = #{goodsName}, GOODS_PRICE = #{goodsPrice},
+            delivery_cost = #{deliveryCost}, GOODS_CONTENT = #{goodsContent},
+            update_emp_num = #{updateEmpNum}, goods_update_date = now()
+        where goods_num = #{goodsNum}
+    </update>
+
+    <delete id="goodsDelete" parameterType="string">
+        delete from goods
+        where goods_num = #{goodsNum}
+    </delete>
 </mapper>

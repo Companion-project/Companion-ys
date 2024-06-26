@@ -1,19 +1,14 @@
 package com.example.companion.controller;
 
 import com.example.companion.command.GoodsCommand;
-import com.example.companion.service.goods.GoodsAutoNumService;
-import com.example.companion.service.goods.GoodsListService;
-import com.example.companion.service.goods.GoodsWriteService;
+import com.example.companion.service.goods.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("goods")
@@ -56,4 +51,53 @@ public class GoodsController {
         goodsWriteService.execute(goodsCommand, session);
         return "goods/goodsRedirect";
     }
+
+    @Autowired
+    ProductsDeleteService productsDeleteService;
+
+    @PostMapping("productsDelete")
+    public String productsDelete(
+            @RequestParam(value = "memDels")String memDels[]){
+        productsDeleteService.execute(memDels);
+        return "redirect:goodsList";
+    }
+
+    @Autowired
+    GoodsDetailService goodsDetailService;
+
+    @GetMapping("goodsDetail")
+    public String goodsDetail(@RequestParam("goodsNum") String goodsNum,
+                              Model model){
+        goodsDetailService.execute(goodsNum, model);
+        return "goods/goodsInfo";
+    }
+
+    @GetMapping("goodsUpdate")
+    public String goodsUpdate(@RequestParam("goodsNum") String goodsNum,
+                              Model model){
+        goodsDetailService.execute(goodsNum, model);
+        return "goods/goodsModify";
+    }
+
+    @Autowired
+    GoodsUpdateService goodsUpdateService;
+    @PostMapping("goodsUpdate")
+    public String goodsUpdate(@Validated GoodsCommand goodsCommand, BindingResult result,
+                              HttpSession session, Model model){
+        goodsUpdateService.execute(goodsCommand, session, result, model);
+        if(result.hasErrors()){
+            return "goods/goodsModify";
+        }
+        return "redirect:goodsDetail?goodsNum="+goodsCommand.getGoodsNum();
+    }
+
+    @Autowired
+    GoodsDeleteService goodsDeleteService;
+
+    @RequestMapping("goodsDel/{goodsNum}")
+    public String goodsDel(@PathVariable("goodsNum") String goodsNum){
+        goodsDeleteService.execute(goodsNum);
+        return "redirect:../goodsList"; //PathVariable사용 시 주소 앞에 .. 꼭 붙여줘야 함 주의!
+    }
+
 }
