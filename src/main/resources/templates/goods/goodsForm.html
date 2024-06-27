@@ -42,7 +42,7 @@
             <td><input type="file" name="goodsMainStore" /><br /><!-- 오류메시지를 받습니다. -->
                 <span style="color:red" th:if="${#fields.hasErrors('goodsMainStore')}" th:errors="*{goodsMainStore}"></span></td>
         </tr>
-        <tr><th>이미지</th><!-- multiple은 파일 선택시 ctrl키를 눌러 여러개를 선택할 수 있게 해줍니다. -->
+        <tr><th>설명이미지</th><!-- multiple은 파일 선택시 ctrl키를 눌러 여러개를 선택할 수 있게 해줍니다. -->
             <td><input type="file" name="goodsImages" multiple="multiple"/></td>
         </tr>
         <tr><th colspan="2"><input type="button" id="btn" value="상품 등록"/></th></tr>

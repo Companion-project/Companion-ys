@@ -1,12 +1,12 @@
 package com.example.companion.controller;
 
+import com.example.companion.command.FileCommand;
 import com.example.companion.service.EmailCheckService;
+import com.example.companion.service.FileDelService;
 import com.example.companion.service.UserEmailCheckService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //@ResponseBody와 같은 방법이나 다른 형식인 @RestController사용
 @RestController
@@ -36,4 +36,16 @@ public class CheckRestController {
         else
             return "인증되었습니다!";
     }
+
+    //@RestAPI사용하여 파일 삭제할 정보 저장
+    //ajax로부터 넘어온 삭제할 파일의 정보를 FileCommand에 저장
+    @Autowired
+    FileDelService fileDelService;
+
+    @PostMapping("goods/fileDel")
+    public String fileDel(FileCommand fileCommand, HttpSession session){
+        return fileDelService.execute(fileCommand, session);
+    }
+
+
 }

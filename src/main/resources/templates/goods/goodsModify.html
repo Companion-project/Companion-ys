@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
-<form action="goodsUpdate" method="post" name="frm" id="frm" th:object="${goodsCommand}">
+<form action="goodsUpdate" method="post" name="frm" id="frm" th:object="${goodsCommand}" enctype="multipart/form-data">
     <table border="1" align="center" width="600">
         <caption>상품 상세보기</caption>
         <tr><th width="150">상품번호</th>
@@ -34,9 +36,54 @@
             <td>[[${goodsCommand.updateEmpNum}]]</td></tr>
         <tr><th>마지막 수정일</th>
             <td>[[${#dates.format(goodsCommand.goodsUpdateDate, 'yyyy-MM-dd')}]]</td></tr>
+
+        <tr><th>대문이미지</th>
+            <td><input type="file" name="goodsMainStore" id="mainFile" style="display:none"/>
+                <span id="main">[[${goodsCommand.goodsMainStoreImg}]]</span>
+                <button type="button" th:attr="onclick=|fileDel('${goodsCommand.goodsMainStoreImg}'
+                                                                ,'${goodsCommand.goodsMainStore}'
+                                                                ,this,'main')|">삭제</button>
+                <br/><span style="color:red">[[${error}]]</span>
+            </td>
+        </tr>
+        <tr><th>설명이미지</th>
+            <td>
+                <div th:each="file, idx : ${#strings.arraySplit(goodsCommand.goodsImagesImg, '-')}">
+                    [[${file}]]<button type="button" th:attr="onclick=|fileDel('${file}'
+                                                                ,'${#strings.arraySplit(goodsCommand.goodsImages,'-')[idx.index]}'
+                                                                ,this)|">삭제</button>
+                </div>
+                <input type="file" name="goodsImages" multiple="multiple"/>
+            </td>
+        </tr>
         <tr><th colspan="2"><input type="submit" value="수정완료"/></th></tr>
     </table>
 </form>
 
+<script>
+    function fileDel(orgFile, storeFile, btn, kind){
+        $.ajax({
+            type:'post',
+            url:'fileDel',
+            dataType:'text',
+            data:{"orgFile":orgFile, "storeFile":storeFile, "kind":kind},
+            success:function(result){
+                if(result.trim() == "1"){ //삭제
+                    $(btn).text("삭제취소");
+                    if(kind == 'main'){
+                        $("#main").css("display","none");
+                        $("#mainFile").css("display","");
+                    }
+                }else{
+                    $(btn).text("삭제");
+                    if(kind == 'main'){
+                        $("#main").css("display","");
+                        $("#mainFile").css("display","none");
+                    }
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

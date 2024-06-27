@@ -72,7 +72,13 @@ public class GoodsController {
 
     @GetMapping("goodsDetail")
     public String goodsDetail(@RequestParam("goodsNum") String goodsNum,
-                              Model model){
+                              Model model,
+                              HttpSession session){
+        //원래 파일명에 -있으면 엑박창으로 뜨는 오류
+        //세션에서도 제거해주어 처리
+        //삭제할 파일 선택 후 다시 수정 페이지 -> 삭제파일정보 세션이 존재하여 오류 존재할수도
+        //수정페이지에 접속하면 삭제파일정보를 가진 세션을 제거처리 해주어 깔끔하게 처리되도록 구현
+        session.removeAttribute("fileList");
         goodsDetailService.execute(goodsNum, model);
         return "goods/goodsInfo";
     }
