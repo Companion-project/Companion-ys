@@ -27,4 +27,10 @@
         from goodsincoming
 
     </select>
+
+    <select id="selectIncomingGoods" resultMap="goodsIncomingResultMap">
+        select <include refid="baseColumns"/>
+        from goodsincoming
+        where INCOMING_NUM = #{incomingNum} and Goods_NUM = #{goodsNUM}
+    </select>
 </mapper>

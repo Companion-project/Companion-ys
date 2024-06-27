@@ -9,4 +9,5 @@ import java.util.List;
 public interface GoodsIncomingMapper {
     public List<GoodsIncomingDTO> goodsIncomingAllSelect();
     public int goodsIncomingInsert(GoodsIncomingDTO dto);
+    public GoodsIncomingDTO selectIncomingGoods(String incomingNum, String goodsNum);
 }

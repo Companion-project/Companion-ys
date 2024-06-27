@@ -1,6 +1,7 @@
 package com.example.companion.controller;
 
 import com.example.companion.command.GoodsIncomingCommand;
+import com.example.companion.domain.GoodsIncomingDTO;
 import com.example.companion.service.goodsIncoming.GoodsIncomingAutoNumService;
 import com.example.companion.service.goodsIncoming.GoodsIncomingListService;
 import com.example.companion.service.goodsIncoming.GoodsIncomingService;
@@ -29,6 +30,18 @@ public class GoodsIncomingController {
 
     @Autowired
     GoodsIncomingListService goodsIncomingListService;
+
+    @Autowired
+    GoodsincomingDetailService goodsincomingDetailService;
+
+    @PostMapping("goodsIncomingDetail")
+    public @ResponseBody GoodsIncomingDTO detail(
+            @RequestParam("incomingNum") String incomingNum,
+            @RequestParam("goodsNum") String goodsNum){
+        GoodsIncomingDTO dto = goodsDetailService.execute(incomingNum, goodsNum);
+        return dto;
+    }
+
 
     @PostMapping("goodsIncomingList")
     public ModelAndView goodsIncomingList(Model model){
