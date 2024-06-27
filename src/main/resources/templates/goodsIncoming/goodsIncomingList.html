@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+입고리스트<br/>
+<div id="list"></div>
+
+<script>
+    $(function(){
+        $.ajax({
+            type:"post",
+            url:"goodsIncomingList",
+            datatype:"json",
+            success:function(result){
+                var item =  "";
+                    item += '<table width=600 border=1>';
+                    item += '    <tr><th>번호</th><th>상품 번호</th><th>수량</th><th>입고일</th><th>가격</th></tr>';
+                    item += '</table>';
+                $("#list").html(item);
+            },
+            error:function(){
+                alert("서버오류");
+            }
+        });
+    });
+</script>
+</body>
+</html>

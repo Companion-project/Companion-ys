@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.companion.mapper.GoodsIncomingMapper">
+    <insert id="goodsIncomingInsert" parameterType="com.example.companion.domain.GoodsIncomingDTO">
+        insert into goodsincoming
+        (incoming_num, goods_num, incoming_qty, incoming_date, production_date, incoming_price, emp_num)
+        values(#{incomingNum},#{goodsNum},#{incomingQty},#{incomingDate},#{productionDate},#{incomingPrice},#{empNum})
+    </insert>
+
+    <sql id="baseColumns">
+        INCOMING_NUM, GOODS_NUM, INCOMING_QTY, INCOMING_DATE, PRODUCTION_DATE, incoming_PRICE, EMP_NUM
+    </sql>
+    <resultMap id="goodsIncomingResultMap" type="com.example.companion.domain.GoodsIncomingDTO">
+        <constructor>
+            <idArg column="INCOMING_NUM" javaType="string"/>
+            <idArg column="GOODS_NUM" javaType="string"/>
+            <arg column="INCOMING_QTY" javaType="integer"/>
+            <arg column="INCOMING_DATE" javaType="java.util.Date"/>
+            <arg column="PRODUCTION_DATE" javaType="java.util.Date"/>
+            <arg column="incoming_PRICE" javaType="integer"/>
+            <arg column="EMP_NUM" javaType="string"/>
+        </constructor>
+    </resultMap>
+    <select id="goodsIncomingAllSelect" resultMap="goodsIncomingResultMap">
+        select <include refid="baseColumns"/>
+        from goodsincoming
+
+    </select>
+</mapper>
