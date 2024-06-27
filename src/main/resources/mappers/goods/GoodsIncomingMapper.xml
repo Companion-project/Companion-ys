@@ -31,6 +31,6 @@
     <select id="selectIncomingGoods" resultMap="goodsIncomingResultMap">
         select <include refid="baseColumns"/>
         from goodsincoming
-        where INCOMING_NUM = #{incomingNum} and Goods_NUM = #{goodsNUM}
+        where incoming_num = #{incomingNum} and goods_num = #{goodsNum}
     </select>
 </mapper>

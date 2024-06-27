@@ -2,10 +2,7 @@ package com.example.companion.controller;
 
 import com.example.companion.command.GoodsIncomingCommand;
 import com.example.companion.domain.GoodsIncomingDTO;
-import com.example.companion.service.goodsIncoming.GoodsIncomingAutoNumService;
-import com.example.companion.service.goodsIncoming.GoodsIncomingListService;
-import com.example.companion.service.goodsIncoming.GoodsIncomingService;
-import com.example.companion.service.goodsIncoming.GoodsItemService;
+import com.example.companion.service.goodsIncoming.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,14 +29,15 @@ public class GoodsIncomingController {
     GoodsIncomingListService goodsIncomingListService;
 
     @Autowired
-    GoodsincomingDetailService goodsincomingDetailService;
+    GoodsIncomingDetailService goodsIncomingDetailService;
 
     @PostMapping("goodsIncomingDetail")
     public @ResponseBody GoodsIncomingDTO detail(
             @RequestParam("incomingNum") String incomingNum,
             @RequestParam("goodsNum") String goodsNum){
-        GoodsIncomingDTO dto = goodsDetailService.execute(incomingNum, goodsNum);
+        GoodsIncomingDTO dto = goodsIncomingDetailService.execute(incomingNum, goodsNum);
         return dto;
+
     }
 
 
