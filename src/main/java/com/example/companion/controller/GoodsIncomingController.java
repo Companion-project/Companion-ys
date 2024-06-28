@@ -31,6 +31,17 @@ public class GoodsIncomingController {
     @Autowired
     GoodsIncomingDetailService goodsIncomingDetailService;
 
+    @RequestMapping(value = "goodsIncomingUpdate", method = RequestMethod.GET)
+    public String goodsIncomingUpdate(
+            @RequestParam("incomingNum") String incomingNum,
+            @RequestParam("num") String goodsNum,
+            Model model){
+        GoodsIncomingDTO dto = goodsIncomingDetailService.execute(incomingNum, goodsNum);
+        model.addAttribute("dto", dto);
+
+        return "goodsIncoming/goodsIncomingUpdate";
+    }
+
     @PostMapping("goodsIncomingDetail")
     public @ResponseBody GoodsIncomingDTO detail(
             @RequestParam("incomingNum") String incomingNum,
