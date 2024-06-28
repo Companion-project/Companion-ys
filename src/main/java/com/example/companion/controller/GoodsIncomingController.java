@@ -46,13 +46,12 @@ public class GoodsIncomingController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("jsonView");
         goodsIncomingListService.execute(model);
-
         return mav;
-
     }
 
     @GetMapping("goodsIncomingList")
     public String goodsIncomingList(){
+
         return "goodsIncoming/goodsIncomingList";
     }
 
@@ -70,6 +69,7 @@ public class GoodsIncomingController {
 
     @GetMapping(value = "goodsItem")
     public String goodsItem(){
+
         return "goodsIncoming/goodsItem";
     }
 

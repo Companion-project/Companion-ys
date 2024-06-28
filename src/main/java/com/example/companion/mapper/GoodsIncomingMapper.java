@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface GoodsIncomingMapper {
-    public List<GoodsIncomingDTO> goodsIncomingAllSelect();
     public int goodsIncomingInsert(GoodsIncomingDTO dto);
+    public List<GoodsIncomingDTO> goodsIncomingAllSelect();
     public GoodsIncomingDTO selectIncomingGoods(String incomingNum, String goodsNum);
 }
