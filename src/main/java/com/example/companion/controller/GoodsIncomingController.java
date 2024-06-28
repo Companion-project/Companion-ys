@@ -31,6 +31,15 @@ public class GoodsIncomingController {
     @Autowired
     GoodsIncomingDetailService goodsIncomingDetailService;
 
+    @Autowired
+    GoodsIncomingUpdateService goodsIncomingUpdateService;
+
+    @PostMapping("goodsIncomingModify")
+    public String goodsIncomingModify(GoodsIncomingCommand goodsIncomingCommand){
+        goodsIncomingUpdateService.execute(goodsIncomingCommand);
+        return "redirect:goodsIncomingList";
+    }
+
     @RequestMapping(value = "goodsIncomingUpdate", method = RequestMethod.GET)
     public String goodsIncomingUpdate(
             @RequestParam("incomingNum") String incomingNum,

@@ -32,4 +32,11 @@
         from goodsincoming
         where incoming_num = #{incomingNum} and goods_num = #{goodsNum}
     </select>
+
+    <update id="goodsIncomingUpdate" parameterType="com.example.companion.domain.GoodsIncomingDTO">
+        update goodsIncoming
+        set incoming_Date = #{incomingDate}, incoming_Qty = #{incomingQty}
+            , production_Date = #{incomingNum} , incoming_Price = #{incomingPrice}
+        where incoming_Num = #{incomingNum} and goods_Num = #{goodsNum}
+    </update>
 </mapper>

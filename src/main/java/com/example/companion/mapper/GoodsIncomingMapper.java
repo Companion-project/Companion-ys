@@ -10,4 +10,5 @@ public interface GoodsIncomingMapper {
     public int goodsIncomingInsert(GoodsIncomingDTO dto);
     public List<GoodsIncomingDTO> goodsIncomingAllSelect();
     public GoodsIncomingDTO selectIncomingGoods(String incomingNum, String goodsNum);
+    public int goodsIncomingUpdate(GoodsIncomingDTO dto);
 }
